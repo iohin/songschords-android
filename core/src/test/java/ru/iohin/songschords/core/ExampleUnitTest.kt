@@ -12,8 +12,8 @@ import ru.iohin.songschords.core_api.entity.Result
 import ru.iohin.songschords.core.data.ArtistRepositoryImpl
 import ru.iohin.songschords.core.data.SongRepositoryImpl
 import ru.iohin.songschords.core.data.rest.AuthInterceptor
-import ru.iohin.songschords.core.data.rest.RestSongHitRequest
 import ru.iohin.songschords.core.data.rest.SongsChordsService
+import ru.iohin.songschords.core_api.entity.Resource
 import java.util.concurrent.TimeUnit
 
 /**
@@ -48,17 +48,30 @@ class ExampleUnitTest {
             val searchSongsContent = songRepository.getSongs(searchContent = "я сижу и смотрю")
             val artist = artistRepository.getArtist(1)
             val song = songRepository.getSong(1)
-//            val hit = songRepository.sendHit(1)
 
-            assert(artists is Result.Success)
-            assert(searchArtists is Result.Success)
-            assert(songs is Result.Success)
-            assert(searchSongsArtist is Result.Success)
-            assert(searchSongsName is Result.Success)
-            assert(searchSongsContent is Result.Success)
+            assert(artists is Result.Success && isResultDataValid(artists))
+            assert(searchArtists is Result.Success && isResultDataValid(searchArtists))
+            assert(songs is Result.Success && isResultDataValid(songs))
+            assert(searchSongsArtist is Result.Success && isResultDataValid(searchSongsArtist))
+            assert(searchSongsName is Result.Success && isResultDataValid(searchSongsName))
+            assert(searchSongsContent is Result.Success && isResultDataValid(searchSongsContent))
             assert(artist is Result.Success)
             assert(song is Result.Success)
-//            assert(hit is Result.Success)
+
+            val testSongs = songRepository.getSongs(searchName = "test")
+            if (testSongs is Result.Success) {
+                testSongs.data.data.find { it.name == "test" }?.let {
+                    val hit = songRepository.sendHit(it.id)
+                    assert(hit is Result.Success)
+                }
+            }
         }
     }
+
+    private fun <T: Any>isResultDataValid(result: Result<Resource<List<T>>>) =
+        result is Result.Success
+                && (result.data.totalCount > result.data.limit
+                && result.data.data.size == result.data.limit
+                || result.data.totalCount < result.data.limit
+                && result.data.data.size == result.data.totalCount)
 }
