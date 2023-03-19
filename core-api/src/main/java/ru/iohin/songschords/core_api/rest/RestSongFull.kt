@@ -1,7 +1,7 @@
-package ru.iohin.songschords.core.data.rest
+package ru.iohin.songschords.core_api.rest
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 import java.util.Date
 
 @Serializable
@@ -13,7 +13,7 @@ data class RestSongFull(
     val copyright: String,
     @SerialName("create_date")
     @Serializable(DateSerializer::class)
-    val createDate: Date, // "2023-03-16T12:34:57.883757",
+    val createDate: Date,
     @SerialName("end_date")
     @Serializable(DateSerializer::class)
     val endDate: Date?,
@@ -25,5 +25,5 @@ data class RestSongFull(
     val resourceUri: String,
     @SerialName("update_date")
     @Serializable(DateSerializer::class)
-    val updateDate: Date, // "2023-03-16T12:35:02.909227"
+    val updateDate: Date,
 )

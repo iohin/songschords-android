@@ -1,4 +1,4 @@
-package ru.iohin.songschords.core.data.rest
+package ru.iohin.songschords.core_api.rest
 
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -8,7 +8,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface SongsChordsService {
+interface RestService {
     @GET("artist/")
     suspend fun getArtists(
         @Query("name__icontains") searchName: String? = null

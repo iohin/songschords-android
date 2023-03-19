@@ -1,7 +1,7 @@
-package ru.iohin.songschords.core.data.rest
+package ru.iohin.songschords.core_api.rest
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 
 @Serializable
 data class RestResource<T>(

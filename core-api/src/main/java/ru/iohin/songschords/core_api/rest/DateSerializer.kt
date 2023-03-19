@@ -1,4 +1,4 @@
-package ru.iohin.songschords.core.data.rest
+package ru.iohin.songschords.core_api.rest
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

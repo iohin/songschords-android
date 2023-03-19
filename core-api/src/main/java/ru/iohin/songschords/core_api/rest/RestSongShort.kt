@@ -1,14 +1,14 @@
-package ru.iohin.songschords.core.data.rest
+package ru.iohin.songschords.core_api.rest
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RestArtistShort(
+data class RestSongShort(
+    val artist: Int,
+    val artistName: String,
     val id: Int,
     val name: String,
-    @SerialName("name_aliases")
-    val nameAliases: String,
     @SerialName("resource_uri")
     val resourceUri: String,
 )

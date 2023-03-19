@@ -1,11 +1,12 @@
 package ru.iohin.songschords.core_api.data
 
-import ru.iohin.songschords.core_api.entity.Resource
-import ru.iohin.songschords.core_api.entity.SongFull
-import ru.iohin.songschords.core_api.entity.SongShort
-import ru.iohin.songschords.core_api.entity.Result
+import ru.iohin.songschords.core_api.entity.*
 
 interface SongRepository {
+    suspend fun getArtists(searchName: String? = null): Result<Resource<List<ArtistShort>>>
+
+    suspend fun getArtist(id: Int): Result<ArtistFull>
+
     suspend fun getSongs(
         artistId: Int? = null,
         searchName: String? = null,
