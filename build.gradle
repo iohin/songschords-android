@@ -2,7 +2,7 @@
 plugins {
     id 'com.android.application' version '7.3.1' apply false
     id 'com.android.library' version '7.3.1' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
+    id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
 }
 
 ext {
@@ -13,6 +13,9 @@ ext {
     coreKtxVersion = "1.9.0"
     appcompatVersion = "1.6.1"
     googleMaterialVersion = "1.8.0"
+    constraintlayoutVersion = "2.1.4"
+    lifecycleVersion = "2.6.0"
+    navVersion = "2.5.3"
     junitVersion = "4.13.2"
     extJunitVersion = "1.1.5"
     espressoCoreVersion = "3.5.1"

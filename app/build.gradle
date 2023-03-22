@@ -35,12 +35,16 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation project(":feature-search")
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "com.google.android.material:material:$googleMaterialVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$extJunitVersion"
