@@ -11,7 +11,9 @@ import retrofit2.http.Query
 interface RestService {
     @GET("artist/")
     suspend fun getArtists(
-        @Query("name__icontains") searchName: String? = null
+        @Query("name__icontains") searchName: String? = null,
+        @Query("offset") offset: Int? = null,
+        @Query("limit") limit: Int = 20
     ): Response<RestResource<RestArtistShort>>
 
     @GET("artist/{id}/")
@@ -21,7 +23,9 @@ interface RestService {
     suspend fun getSongs(
         @Query("artist_id") artistId: Int? = null,
         @Query("name__icontains") searchName: String? = null,
-        @Query("content__icontains") searchContent: String? = null
+        @Query("content__icontains") searchContent: String? = null,
+        @Query("offset") offset: Int? = null,
+        @Query("limit") limit: Int = 20
     ): Response<RestResource<RestSongShort>>
 
     @GET("song/{id}/")

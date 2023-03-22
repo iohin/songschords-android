@@ -8,8 +8,12 @@ import java.net.UnknownHostException
 import javax.inject.Inject
 
 class SongRepositoryImpl @Inject constructor(private val restService: RestService): SongRepository {
-    override suspend fun getArtists(searchName: String?) = try {
-        val response = restService.getArtists(searchName)
+    override suspend fun getArtists(
+        searchName: String?,
+        offset: Int?,
+        limit: Int
+    ) = try {
+        val response = restService.getArtists(searchName, offset, limit)
         val body = response.body()
         if (response.isSuccessful && body != null) {
             Result.Success(Resource(
@@ -51,9 +55,11 @@ class SongRepositoryImpl @Inject constructor(private val restService: RestServic
     override suspend fun getSongs(
         artistId: Int?,
         searchName: String?,
-        searchContent: String?
+        searchContent: String?,
+        offset: Int?,
+        limit: Int
     ): Result<Resource<List<SongShort>>> = try {
-        val response = restService.getSongs(artistId, searchName, searchContent)
+        val response = restService.getSongs(artistId, searchName, searchContent, offset, limit)
         val body = response.body()
         if (response.isSuccessful && body != null) {
             Result.Success(Resource(
