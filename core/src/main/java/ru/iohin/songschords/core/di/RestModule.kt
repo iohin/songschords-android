@@ -8,8 +8,8 @@ import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import ru.iohin.songschords.core.BuildConfig
-import ru.iohin.songschords.core.data.rest.AuthInterceptor
-import ru.iohin.songschords.core_api.rest.RestService
+import ru.iohin.songschords.core.rest.AuthInterceptor
+import ru.iohin.songschords.core.rest.RestService
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -22,7 +22,7 @@ class RestModule {
         .build()
 
     @Provides
-    fun providesRetrofit() = Retrofit.Builder()
+    fun providesRestService() = Retrofit.Builder()
         .client(createClient())
         .baseUrl("${BuildConfig.REST_URL}${RestService.API_PATH}")
         .addConverterFactory(

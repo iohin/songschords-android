@@ -1,4 +1,4 @@
-package ru.iohin.songschords.core.data.rest
+package ru.iohin.songschords.core.rest
 
 import okhttp3.Interceptor
 import okhttp3.Request

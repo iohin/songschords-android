@@ -1,7 +1,7 @@
 package ru.iohin.songschords.core.data
 
-import ru.iohin.songschords.core_api.rest.RestSongHitRequest
-import ru.iohin.songschords.core_api.rest.RestService
+import ru.iohin.songschords.core.rest.RestSongHitRequest
+import ru.iohin.songschords.core.rest.RestService
 import ru.iohin.songschords.core_api.data.SongRepository
 import ru.iohin.songschords.core_api.entity.*
 import java.net.UnknownHostException
