@@ -11,6 +11,7 @@ ext {
     targetSdkVersion = 33
 
     coreKtxVersion = "1.9.0"
+    fragmentKtxVersion = "1.5.6"
     appcompatVersion = "1.6.1"
     googleMaterialVersion = "1.8.0"
     constraintlayoutVersion = "2.1.4"
