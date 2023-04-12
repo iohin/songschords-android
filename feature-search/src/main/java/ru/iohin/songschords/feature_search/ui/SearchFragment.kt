@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import ru.iohin.songschords.core_api.navigation.AppNavigation
 import ru.iohin.songschords.feature_search.R
 import ru.iohin.songschords.feature_search.di.SearchFragmentComponent
 import javax.inject.Inject
@@ -21,11 +22,16 @@ import javax.inject.Inject
 class SearchFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: SearchViewModel.Factory
+    @Inject
+    lateinit var appNavigation: AppNavigation
     private val viewModel: SearchViewModel by viewModels { viewModelFactory }
     private lateinit var recyclerView: RecyclerView
     private val artistsAdapter = ArtistsAdapter().apply {
         onBottomReached = {
             viewModel.loadMore()
+        }
+        onArtistClick = { artist ->
+            appNavigation.openArtist(artist.id, artist.name, artist.imageUrl)
         }
     }
     private lateinit var spinner: ProgressBar

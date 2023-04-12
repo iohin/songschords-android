@@ -17,13 +17,16 @@ class ArtistsAdapter: Adapter<ArtistViewHolder>() {
         }
 
     var onBottomReached: (() -> Unit)? = null
+    var onArtistClick: ((Artist) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArtistViewHolder(parent)
 
     override fun getItemCount() = artists.size
 
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
-        holder.bind(artists[position])
+        val artist = artists[position]
+        holder.bind(artist)
+        holder.onClick = { onArtistClick?.invoke(artist) }
         if (position == artists.size - 1) {
             onBottomReached?.invoke()
         }

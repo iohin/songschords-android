@@ -13,8 +13,10 @@ class ArtistViewHolder(parent: ViewGroup) : ViewHolder(
 ) {
     private val imageView: ImageView = itemView.findViewById(R.id.artist_image)
     private val nameTextView: TextView = itemView.findViewById(R.id.artist_name)
+    var onClick: (() -> Unit)? = null
 
     fun bind(artist: Artist) {
+        itemView.setOnClickListener { onClick?.invoke() }
         nameTextView.text = artist.name
         Glide.with(itemView).load(artist.imageUrl).into(imageView)
     }
