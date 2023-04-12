@@ -60,11 +60,6 @@ class SearchFragment : Fragment() {
             .show()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.search("")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

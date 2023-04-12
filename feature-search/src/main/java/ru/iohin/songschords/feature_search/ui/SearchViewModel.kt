@@ -17,6 +17,10 @@ class SearchViewModel(private val songRepository: SongRepository) : ViewModel() 
     private var offset = 0
     private var canLoadMore = true
 
+    init {
+        search("")
+    }
+
     fun search(query: String) {
         _state.value = SearchState.LoadingSearchState
         canLoadMore = true
