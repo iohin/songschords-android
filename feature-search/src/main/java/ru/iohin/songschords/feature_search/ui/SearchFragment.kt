@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -24,7 +23,11 @@ class SearchFragment : Fragment() {
     lateinit var viewModelFactory: SearchViewModel.Factory
     private val viewModel: SearchViewModel by viewModels { viewModelFactory }
     private lateinit var recyclerView: RecyclerView
-    private val artistsAdapter = ArtistsAdapter()
+    private val artistsAdapter = ArtistsAdapter().apply {
+        onBottomReached = {
+            viewModel.loadMore()
+        }
+    }
     private lateinit var spinner: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
