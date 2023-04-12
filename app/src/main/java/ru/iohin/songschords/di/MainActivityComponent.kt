@@ -4,6 +4,7 @@ import android.app.Activity
 import dagger.BindsInstance
 import dagger.Component
 import ru.iohin.songschords.core_api.di.ActivityProvider
+import ru.iohin.songschords.core_api.di.ActivityScope
 import ru.iohin.songschords.core_api.di.CoreProvider
 import ru.iohin.songschords.core_api.requireCoreProvider
 

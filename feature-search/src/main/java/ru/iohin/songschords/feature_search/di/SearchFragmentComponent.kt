@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import dagger.BindsInstance
 import dagger.Component
 import ru.iohin.songschords.core_api.di.ActivityProvider
+import ru.iohin.songschords.core_api.di.FragmentScope
 import ru.iohin.songschords.core_api.requireActivityProvider
 import ru.iohin.songschords.feature_search.ui.SearchFragment
 
@@ -12,6 +13,7 @@ import ru.iohin.songschords.feature_search.ui.SearchFragment
         ActivityProvider::class
     ]
 )
+@FragmentScope
 interface SearchFragmentComponent: ActivityProvider {
     fun providesFragment(): Fragment
     fun inject(searchFragment: SearchFragment)
