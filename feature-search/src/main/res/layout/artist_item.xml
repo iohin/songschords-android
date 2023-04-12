@@ -3,21 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="16dp"
+    android:paddingVertical="8dp"
+    android:paddingRight="24dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/artist_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.SongsAndChords.Search.CornerSize50Percent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/artist_name"
+        />
 
     <TextView
         android:id="@+id/artist_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginVertical="8dp"
-        android:layout_marginRight="24dp"
         android:minHeight="40dp"
         android:gravity="center_vertical"
         tools:text="Artist name"
         android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/artist_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />

@@ -17,7 +17,12 @@ class SearchViewModel(private val songRepository: SongRepository) : ViewModel() 
         viewModelScope.launch {
             when (val result = songRepository.getArtists()) {
                 is Result.Success ->
-                    _state.value = SearchState.SearchResultsState(result.data.data)
+                    _state.value = SearchState.SearchResultsState(result.data.data.map {
+                        Artist(
+                            it.name,
+                            it.imageUrl
+                        )
+                    })
                 is Result.Error ->
                     _state.value = SearchState.ErrorSearchState(result.exception.message ?: "")
                 is Result.Loading -> _state.value = SearchState.LoadingSearchState

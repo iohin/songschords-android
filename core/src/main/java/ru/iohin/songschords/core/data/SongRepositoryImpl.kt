@@ -22,7 +22,8 @@ class SongRepositoryImpl @Inject constructor(private val restService: RestServic
                 offset = body.meta.offset,
                 data = body.objects.map { ArtistShort(
                     id = it.id,
-                    name = it.name
+                    name = it.name,
+                    imageUrl = it.imageUrl
                 ) }
             ))
         } else {

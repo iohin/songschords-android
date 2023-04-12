@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 
 class ArtistsAdapter: Adapter<ArtistViewHolder>() {
-    var artists = emptyList<String>()
+    var artists = emptyList<Artist>()
         set(value) {
             field = value
             notifyDataSetChanged()

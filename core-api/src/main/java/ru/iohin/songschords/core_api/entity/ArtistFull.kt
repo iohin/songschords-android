@@ -7,5 +7,5 @@ data class ArtistFull(
     val description: String,
     val imageUrl: String?
 ) {
-    fun short() = ArtistShort(id, name)
+    fun short() = ArtistShort(id, name, imageUrl)
 }

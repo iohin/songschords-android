@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 data class RestArtistShort(
     val id: Int,
     val name: String,
+    @SerialName("image_url")
+    val imageUrl: String?,
     @SerialName("name_aliases")
     val nameAliases: String,
     @SerialName("resource_uri")

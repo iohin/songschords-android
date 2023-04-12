@@ -43,7 +43,7 @@ class SearchFragment : Fragment() {
                         }
                         is SearchState.SearchResultsState -> {
                             spinner.visibility = View.GONE
-                            artistsAdapter.artists = state.results.map { it.name }
+                            artistsAdapter.artists = state.results
                         }
                     }
                 }
@@ -70,7 +70,6 @@ class SearchFragment : Fragment() {
         spinner = view.findViewById(R.id.spinner)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
         recyclerView.adapter = artistsAdapter
         return view
     }
