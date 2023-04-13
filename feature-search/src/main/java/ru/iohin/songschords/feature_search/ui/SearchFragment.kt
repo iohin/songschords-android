@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import ru.iohin.songschords.core_api.navigation.AppNavigation
@@ -30,8 +32,8 @@ class SearchFragment : Fragment() {
         onBottomReached = {
             viewModel.loadMore()
         }
-        onArtistClick = { artist ->
-            appNavigation.openArtist(artist.id, artist.name, artist.imageUrl)
+        onArtistClick = { artist, nameView, imageView ->
+            appNavigation.openArtist(artist.id, artist.name, artist.imageUrl, nameView, imageView)
         }
     }
     private lateinit var spinner: ProgressBar
@@ -58,6 +60,9 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+
+        sharedElementReturnTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     private fun showError(message: String) {
@@ -70,11 +75,19 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        return inflater.inflate(R.layout.fragment_search, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         spinner = view.findViewById(R.id.spinner)
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = artistsAdapter
-        return view
+        postponeEnterTransition()
+        recyclerView.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
     }
 }

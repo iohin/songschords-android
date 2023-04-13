@@ -1,5 +1,6 @@
 package ru.iohin.songschords.feature_search.ui
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -17,7 +18,7 @@ class ArtistsAdapter: Adapter<ArtistViewHolder>() {
         }
 
     var onBottomReached: (() -> Unit)? = null
-    var onArtistClick: ((Artist) -> Unit)? = null
+    var onArtistClick: ((Artist, View, View) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArtistViewHolder(parent)
 
@@ -26,7 +27,7 @@ class ArtistsAdapter: Adapter<ArtistViewHolder>() {
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
         val artist = artists[position]
         holder.bind(artist)
-        holder.onClick = { onArtistClick?.invoke(artist) }
+        holder.onClick = { nameView, imageView -> onArtistClick?.invoke(artist, nameView, imageView) }
         if (position == artists.size - 1) {
             onBottomReached?.invoke()
         }

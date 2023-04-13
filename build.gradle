@@ -28,4 +28,5 @@ ext {
     daggerVersion = "2.45"
     kotlinxSerializationVersion = "1.4.1"
     retrofitKotlinxSerializationVersion = "0.8.0"
+    glideVersion = "4.15.1"
 }
