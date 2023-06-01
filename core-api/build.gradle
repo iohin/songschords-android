@@ -38,6 +38,7 @@ dependencies {
     implementation "com.google.android.material:material:$googleMaterialVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion"
+    implementation "androidx.navigation:navigation-runtime-ktx:$navVersion"
 
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$extJunitVersion"

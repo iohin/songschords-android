@@ -15,10 +15,10 @@ class ArtistViewHolder(parent: ViewGroup) : ViewHolder(
 ) {
     private val imageView: ImageView = itemView.findViewById(R.id.artist_image)
     private val nameTextView: TextView = itemView.findViewById(R.id.artist_name)
-    var onClick: ((View, View) -> Unit)? = null
+    var onClick: ((View, View, View) -> Unit)? = null
 
     fun bind(artist: Artist) {
-        itemView.setOnClickListener { onClick?.invoke(nameTextView, imageView) }
+        itemView.setOnClickListener { onClick?.invoke(itemView, nameTextView, imageView) }
         nameTextView.text = artist.name
         ViewCompat.setTransitionName(nameTextView, "artist_name${artist.id}")
         ViewCompat.setTransitionName(imageView, "artist_image${artist.id}")

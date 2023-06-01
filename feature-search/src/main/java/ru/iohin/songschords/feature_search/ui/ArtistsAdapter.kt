@@ -18,7 +18,7 @@ class ArtistsAdapter: Adapter<ArtistViewHolder>() {
         }
 
     var onBottomReached: (() -> Unit)? = null
-    var onArtistClick: ((Artist, View, View) -> Unit)? = null
+    var onArtistClick: ((Artist, View, View, View) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArtistViewHolder(parent)
 
@@ -27,7 +27,7 @@ class ArtistsAdapter: Adapter<ArtistViewHolder>() {
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
         val artist = artists[position]
         holder.bind(artist)
-        holder.onClick = { nameView, imageView -> onArtistClick?.invoke(artist, nameView, imageView) }
+        holder.onClick = { containerView, nameView, imageView -> onArtistClick?.invoke(artist, containerView, nameView, imageView) }
         if (position == artists.size - 1) {
             onBottomReached?.invoke()
         }

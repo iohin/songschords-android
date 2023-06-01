@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.coroutines.launch
+import ru.iohin.feature.artist.nav.NavigationToArtist
 import ru.iohin.songschords.core_api.navigation.AppNavigation
 import ru.iohin.songschords.feature_search.R
 import ru.iohin.songschords.feature_search.di.SearchFragmentComponent
@@ -32,8 +35,15 @@ class SearchFragment : Fragment() {
         onBottomReached = {
             viewModel.loadMore()
         }
-        onArtistClick = { artist, nameView, imageView ->
-            appNavigation.openArtist(artist.id, artist.name, artist.imageUrl, nameView, imageView)
+        onArtistClick = { artist, containerView, nameView, imageView ->
+            appNavigation.getNavigation(NavigationToArtist::class)?.navigate(
+                artist.id,
+                artist.name,
+                artist.imageUrl,
+                containerView,
+                nameView,
+                imageView
+            )
         }
     }
     private lateinit var spinner: ProgressBar
@@ -62,7 +72,7 @@ class SearchFragment : Fragment() {
         }
 
         sharedElementReturnTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
     }
 
     private fun showError(message: String) {
@@ -80,6 +90,10 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        val hold = Hold()
+//        hold.addTarget(view)
+//        hold.duration = 150
+//        exitTransition = hold
 
         spinner = view.findViewById(R.id.spinner)
         recyclerView = view.findViewById(R.id.recycler_view)

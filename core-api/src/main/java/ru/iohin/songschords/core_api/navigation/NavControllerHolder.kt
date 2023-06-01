@@ -1,4 +1,4 @@
-package ru.iohin.songschords.navigation
+package ru.iohin.songschords.core_api.navigation
 
 import androidx.navigation.NavController
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/artist_nav_graph"
+    app:startDestination="@id/artistFragment">
+    <fragment
+        android:id="@+id/artistFragment"
+        android:name="ru.iohin.songschords.feature_artist.ui.ArtistFragment"
+        android:label="Artist">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+        <deepLink
+            app:uri="android-app://ru.iohin.songschords/artist_fragment/{id}/{name}/{imageUrl}" />
+    </fragment>
+</navigation>

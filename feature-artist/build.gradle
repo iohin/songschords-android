@@ -1,10 +1,12 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
 }
 
 android {
-    namespace 'ru.iohin.songschords.feature_song'
+    namespace 'ru.iohin.songschords.feature_artist'
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
@@ -32,11 +34,16 @@ android {
 
 dependencies {
     implementation project(":core-api")
+    api project(":feature:artist:nav")
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "com.google.android.material:material:$googleMaterialVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$extJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"

@@ -7,7 +7,7 @@ import ru.iohin.songschords.R
 import ru.iohin.songschords.core_api.ActivityProviderHolder
 import ru.iohin.songschords.core_api.di.ActivityProvider
 import ru.iohin.songschords.di.MainActivityComponent
-import ru.iohin.songschords.navigation.NavControllerHolder
+import ru.iohin.songschords.core_api.navigation.NavControllerHolder
 
 class MainActivity : AppCompatActivity(), ActivityProviderHolder, NavControllerHolder {
     lateinit var mainActivityComponent: MainActivityComponent
