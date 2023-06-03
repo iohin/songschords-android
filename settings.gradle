@@ -14,9 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "SongsAndChords"
 include ':app'
-include ':core-api'
+include ':core:api'
 include ':core'
-include ':feature-search'
-include ':feature-song'
-include ':feature-artist'
+include ':feature:search'
+include ':feature:song'
+include ':feature:artist'
 include ':feature:artist:nav'

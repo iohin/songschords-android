@@ -36,8 +36,8 @@ android {
 
 dependencies {
     implementation project(":core")
-    implementation project(":feature-search")
-    implementation project(":feature-artist")
+    implementation project(":feature:search")
+    implementation project(":feature:artist")
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

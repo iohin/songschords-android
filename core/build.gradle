@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    api project(":core-api")
+    api project(":core:api")
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation project(":core-api")
+    implementation project(":core:api")
     api project(":feature:artist:nav")
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
