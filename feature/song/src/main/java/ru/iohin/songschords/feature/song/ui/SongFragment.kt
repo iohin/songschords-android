@@ -34,7 +34,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
         SongFragmentComponent.getSongFragmentComponent(this).inject(this)
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect { state ->
                     when (state) {
                         is SongState.SuccessSongState -> contentView.text = state.song.content
