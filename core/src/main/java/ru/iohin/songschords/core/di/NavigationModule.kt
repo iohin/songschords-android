@@ -3,7 +3,7 @@ package ru.iohin.songschords.core.di
 import dagger.Module
 import dagger.Provides
 import ru.iohin.songschords.core.navigation.AppNavigationImpl
-import ru.iohin.songschords.core_api.navigation.AppNavigation
+import ru.iohin.songschords.core.api.navigation.AppNavigation
 import kotlin.reflect.KClass
 
 @Module

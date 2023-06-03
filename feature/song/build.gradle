@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'ru.iohin.songschords.feature_song'
+    namespace 'ru.iohin.songschords.feature.song'
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {

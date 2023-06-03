@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'ru.iohin.songschords.core_api'
+    namespace 'ru.iohin.songschords.core.api'
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {

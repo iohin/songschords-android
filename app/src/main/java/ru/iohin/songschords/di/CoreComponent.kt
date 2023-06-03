@@ -5,7 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import ru.iohin.songschords.core.di.RepositoryModule
 import ru.iohin.songschords.core.di.RestModule
-import ru.iohin.songschords.core_api.di.CoreProvider
+import ru.iohin.songschords.core.api.di.CoreProvider
 
 @Component(
     modules = [

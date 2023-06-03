@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import ru.iohin.songschords.R
-import ru.iohin.songschords.core_api.ActivityProviderHolder
-import ru.iohin.songschords.core_api.di.ActivityProvider
+import ru.iohin.songschords.core.api.ActivityProviderHolder
+import ru.iohin.songschords.core.api.di.ActivityProvider
 import ru.iohin.songschords.di.MainActivityComponent
-import ru.iohin.songschords.core_api.navigation.NavControllerHolder
+import ru.iohin.songschords.core.api.navigation.NavControllerHolder
 
 class MainActivity : AppCompatActivity(), ActivityProviderHolder, NavControllerHolder {
     lateinit var mainActivityComponent: MainActivityComponent

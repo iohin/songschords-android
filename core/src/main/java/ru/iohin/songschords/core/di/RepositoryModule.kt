@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.BindsInstance
 import dagger.Module
 import ru.iohin.songschords.core.data.SongRepositoryImpl
-import ru.iohin.songschords.core_api.data.SongRepository
+import ru.iohin.songschords.core.api.data.SongRepository
 
 @Module
 interface RepositoryModule {

@@ -2,8 +2,13 @@ package ru.iohin.songschords.core.data
 
 import ru.iohin.songschords.core.rest.RestSongHitRequest
 import ru.iohin.songschords.core.rest.RestService
-import ru.iohin.songschords.core_api.data.SongRepository
-import ru.iohin.songschords.core_api.entity.*
+import ru.iohin.songschords.core.api.entity.ArtistFull
+import ru.iohin.songschords.core.api.entity.Resource
+import ru.iohin.songschords.core.api.entity.Result
+import ru.iohin.songschords.core.api.entity.SongFull
+import ru.iohin.songschords.core.api.entity.SongShort
+import ru.iohin.songschords.core.api.data.SongRepository
+import ru.iohin.songschords.core.api.entity.ArtistShort
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -85,7 +90,8 @@ class SongRepositoryImpl @Inject constructor(private val restService: RestServic
         val response = restService.getSong(id)
         val body = response.body()
         if (response.isSuccessful && body != null) {
-            Result.Success(SongFull(
+            Result.Success(
+                SongFull(
                 body.id,
                 body.name,
                 body.artist,
@@ -93,7 +99,8 @@ class SongRepositoryImpl @Inject constructor(private val restService: RestServic
                 body.author,
                 body.content,
                 body.copyright
-            ))
+            )
+            )
         } else {
             Result.Error(Error(response.message()))
         }

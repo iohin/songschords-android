@@ -1,8 +1,8 @@
 package ru.iohin.songschords
 
 import android.app.Application
-import ru.iohin.songschords.core_api.CoreProviderHolder
-import ru.iohin.songschords.core_api.di.CoreProvider
+import ru.iohin.songschords.core.api.CoreProviderHolder
+import ru.iohin.songschords.core.api.di.CoreProvider
 import ru.iohin.songschords.di.CoreComponent
 
 import ru.iohin.songschords.di.DaggerCoreComponent

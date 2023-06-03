@@ -5,7 +5,7 @@
     app:startDestination="@id/artistFragment">
     <fragment
         android:id="@+id/artistFragment"
-        android:name="ru.iohin.songschords.feature_artist.ui.ArtistFragment"
+        android:name="ru.iohin.songschords.feature.artist.ui.ArtistFragment"
         android:label="Artist">
         <argument
             android:name="id"

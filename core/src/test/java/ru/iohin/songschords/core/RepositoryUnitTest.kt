@@ -4,9 +4,9 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-import ru.iohin.songschords.core_api.entity.Result
-import ru.iohin.songschords.core_api.data.SongRepository
-import ru.iohin.songschords.core_api.entity.Resource
+import ru.iohin.songschords.core.api.entity.Result
+import ru.iohin.songschords.core.api.data.SongRepository
+import ru.iohin.songschords.core.api.entity.Resource
 import javax.inject.Inject
 
 /**

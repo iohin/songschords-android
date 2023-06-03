@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="ru.iohin.songschords.feature_artist.ui.ArtistFragment">
+    tools:context="ru.iohin.songschords.feature.artist.ui.ArtistFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/artist_image"

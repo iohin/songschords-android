@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'ru.iohin.feature.artist.nav'
+    namespace 'ru.iohin.songschords.feature.artist.nav'
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {

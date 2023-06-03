@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="ru.iohin.songschords.feature_search.ui.SearchFragment"
+        android:name="ru.iohin.songschords.feature.search.ui.SearchFragment"
         android:label="Search" >
 
     </fragment>

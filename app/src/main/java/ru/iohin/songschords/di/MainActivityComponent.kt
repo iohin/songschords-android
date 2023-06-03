@@ -4,12 +4,12 @@ import android.app.Activity
 import dagger.BindsInstance
 import dagger.Component
 import ru.iohin.feature.artist.nav.NavigationToArtist
-import ru.iohin.songschords.core_api.di.ActivityProvider
-import ru.iohin.songschords.core_api.di.ActivityScope
-import ru.iohin.songschords.core_api.di.CoreProvider
-import ru.iohin.songschords.core_api.requireCoreProvider
+import ru.iohin.songschords.core.api.di.ActivityProvider
+import ru.iohin.songschords.core.api.di.ActivityScope
+import ru.iohin.songschords.core.api.di.CoreProvider
+import ru.iohin.songschords.core.api.requireCoreProvider
 import ru.iohin.songschords.core.di.NavigationModule
-import ru.iohin.songschords.feature_artist.navigation.NavigationToArtistImpl
+import ru.iohin.songschords.feature.artist.navigation.NavigationToArtistImpl
 import ru.iohin.songschords.ui.MainActivity
 
 @Component(
