@@ -24,7 +24,7 @@ import ru.iohin.songschords.feature_search.R
 import ru.iohin.songschords.feature_search.di.SearchFragmentComponent
 import javax.inject.Inject
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(R.layout.fragment_search) {
     @Inject
     lateinit var viewModelFactory: SearchViewModel.Factory
     @Inject
@@ -80,13 +80,6 @@ class SearchFragment : Fragment() {
         MaterialAlertDialogBuilder(requireActivity())
             .setMessage(message)
             .show()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
