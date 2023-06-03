@@ -24,8 +24,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
-import ru.iohin.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_IMAGE
-import ru.iohin.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_NAME
+import ru.iohin.songschords.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_IMAGE
+import ru.iohin.songschords.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_NAME
 import ru.iohin.songschords.feature.artist.R
 import ru.iohin.songschords.feature.artist.di.ArtistFragmentComponent
 import javax.inject.Inject

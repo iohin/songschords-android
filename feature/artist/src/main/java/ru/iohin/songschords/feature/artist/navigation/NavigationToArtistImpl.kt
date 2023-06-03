@@ -4,9 +4,9 @@ import android.view.View
 import androidx.core.net.toUri
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import ru.iohin.feature.artist.nav.NavigationToArtist
-import ru.iohin.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_IMAGE
-import ru.iohin.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_NAME
+import ru.iohin.songschords.feature.artist.nav.NavigationToArtist
+import ru.iohin.songschords.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_IMAGE
+import ru.iohin.songschords.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_NAME
 import ru.iohin.songschords.core.api.navigation.NavControllerHolder
 import java.net.URLEncoder
 

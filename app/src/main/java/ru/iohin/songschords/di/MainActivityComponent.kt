@@ -3,7 +3,7 @@ package ru.iohin.songschords.di
 import android.app.Activity
 import dagger.BindsInstance
 import dagger.Component
-import ru.iohin.feature.artist.nav.NavigationToArtist
+import ru.iohin.songschords.feature.artist.nav.NavigationToArtist
 import ru.iohin.songschords.core.api.di.ActivityProvider
 import ru.iohin.songschords.core.api.di.ActivityScope
 import ru.iohin.songschords.core.api.di.CoreProvider

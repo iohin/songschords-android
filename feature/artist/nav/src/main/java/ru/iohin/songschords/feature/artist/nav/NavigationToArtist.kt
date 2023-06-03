@@ -1,4 +1,4 @@
-package ru.iohin.feature.artist.nav
+package ru.iohin.songschords.feature.artist.nav
 
 import android.view.View
 

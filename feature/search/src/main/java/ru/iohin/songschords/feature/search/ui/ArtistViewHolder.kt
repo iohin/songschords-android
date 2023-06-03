@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import ru.iohin.feature.artist.nav.NavigationToArtist
+import ru.iohin.songschords.feature.artist.nav.NavigationToArtist
 import ru.iohin.songschords.feature.search.R
 
 class ArtistViewHolder(parent: ViewGroup) : ViewHolder(

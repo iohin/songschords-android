@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
-import ru.iohin.feature.artist.nav.NavigationToArtist
+import ru.iohin.songschords.feature.artist.nav.NavigationToArtist
 import ru.iohin.songschords.core.api.navigation.AppNavigation
 import ru.iohin.songschords.feature.search.R
 import ru.iohin.songschords.feature.search.di.SearchFragmentComponent
