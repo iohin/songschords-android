@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation project(":core:api")
     api project(":feature:artist:nav")
+    implementation project(":feature:song:nav")
 
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

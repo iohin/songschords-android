@@ -10,6 +10,8 @@ import ru.iohin.songschords.core.api.di.CoreProvider
 import ru.iohin.songschords.core.api.requireCoreProvider
 import ru.iohin.songschords.core.di.NavigationModule
 import ru.iohin.songschords.feature.artist.navigation.NavigationToArtistImpl
+import ru.iohin.songschords.feature.song.nav.NavigationToSong
+import ru.iohin.songschords.feature.song.navigation.NavigationToSongImpl
 import ru.iohin.songschords.ui.MainActivity
 
 @Component(
@@ -40,7 +42,8 @@ interface MainActivityComponent: ActivityProvider {
                     mainActivity.application.requireCoreProvider(),
                     mainActivity,
                     NavigationModule(mapOf(
-                        NavigationToArtist::class to NavigationToArtistImpl(mainActivity)
+                        NavigationToArtist::class to NavigationToArtistImpl(mainActivity),
+                        NavigationToSong::class to NavigationToSongImpl(mainActivity)
                     ))
                 )
     }

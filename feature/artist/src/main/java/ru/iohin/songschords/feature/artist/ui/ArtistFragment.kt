@@ -24,10 +24,12 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import ru.iohin.songschords.core.api.navigation.AppNavigation
 import ru.iohin.songschords.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_IMAGE
 import ru.iohin.songschords.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_NAME
 import ru.iohin.songschords.feature.artist.R
 import ru.iohin.songschords.feature.artist.di.ArtistFragmentComponent
+import ru.iohin.songschords.feature.song.nav.NavigationToSong
 import javax.inject.Inject
 
 class ArtistFragment : Fragment(R.layout.fragment_artist) {
@@ -35,6 +37,8 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
     @Inject
     lateinit var viewModelFactory: ArtistViewModel.Factory
     private val viewModel: ArtistViewModel by viewModels { viewModelFactory }
+    @Inject
+    lateinit var appNavigation: AppNavigation
 
     private lateinit var nameTextView: TextView
     private lateinit var descriptionTextView: TextView
@@ -45,7 +49,14 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
             viewModel.loadMore(args.id)
         }
         onSongClick = SongsAdapter.OnSongClick { song, sharedNameView ->
-
+            appNavigation.getNavigation(NavigationToSong::class)?.navigate(
+                song.id,
+                song.name,
+                args.name,
+                null,
+                sharedNameView,
+                nameTextView
+            )
         }
     }
     private lateinit var spinner: ProgressBar

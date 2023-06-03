@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import ru.iohin.songschords.feature.artist.R
+import ru.iohin.songschords.feature.song.nav.NavigationToSong
 
 class SongViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.song_item, parent, false)
@@ -21,7 +22,7 @@ class SongViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         nameTextView.text = song.name
         ViewCompat.setTransitionName(
             nameTextView,
-            "song_name${song.id}"
+            "${NavigationToSong.SHARED_NAME}${song.id}"
         )
     }
 
