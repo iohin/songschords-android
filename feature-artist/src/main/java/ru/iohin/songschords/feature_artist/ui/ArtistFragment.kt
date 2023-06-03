@@ -14,6 +14,8 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import ru.iohin.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_IMAGE
+import ru.iohin.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_NAME
 import ru.iohin.songschords.feature_artist.R
 
 class ArtistFragment : Fragment(R.layout.fragment_artist) {
@@ -33,9 +35,15 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
         super.onViewCreated(view, savedInstanceState)
         nameTextView = view.findViewById(R.id.artist_name)
         nameTextView.text = args.name
-        ViewCompat.setTransitionName(nameTextView, "artist_name${args.id}")
+        ViewCompat.setTransitionName(
+            nameTextView,
+            "${SHARED_ARTIST_NAME}${args.id}"
+        )
         imageView = view.findViewById(R.id.artist_image)
-        ViewCompat.setTransitionName(imageView, "artist_image${args.id}")
+        ViewCompat.setTransitionName(
+            imageView,
+            "${SHARED_ARTIST_IMAGE}${args.id}"
+        )
         postponeEnterTransition()
         Glide.with(this)
             .load(args.imageUrl)

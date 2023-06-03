@@ -35,14 +35,15 @@ class SearchFragment : Fragment() {
         onBottomReached = {
             viewModel.loadMore()
         }
-        onArtistClick = { artist, containerView, nameView, imageView ->
+        onArtistClick =
+            ArtistsAdapter.OnArtistClick { artist, sharedContainerView, sharedNameView, sharedImageView ->
             appNavigation.getNavigation(NavigationToArtist::class)?.navigate(
                 artist.id,
                 artist.name,
                 artist.imageUrl,
-                containerView,
-                nameView,
-                imageView
+                sharedContainerView,
+                sharedNameView,
+                sharedImageView
             )
         }
     }

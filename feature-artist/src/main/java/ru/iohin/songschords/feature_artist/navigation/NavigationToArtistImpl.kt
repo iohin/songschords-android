@@ -2,9 +2,12 @@ package ru.iohin.songschords.feature_artist.navigation
 
 import android.view.View
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import ru.iohin.feature.artist.nav.NavigationToArtist
+import ru.iohin.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_IMAGE
+import ru.iohin.feature.artist.nav.NavigationToArtist.Companion.SHARED_ARTIST_NAME
 import ru.iohin.songschords.core_api.navigation.NavControllerHolder
 import java.net.URLEncoder
 
@@ -13,19 +16,19 @@ class NavigationToArtistImpl(private val navControllerHolder: NavControllerHolde
         id: Int,
         name: String,
         imageUrl: String?,
-        containerView: View?,
-        nameView: View?,
-        imageView: View?
+        sharedContainerView: View?,
+        sharedNameView: View?,
+        sharedImageView: View?
     ) {
         val sharedElements = mutableListOf<Pair<View, String>>()
-//        containerView?.also {
-//            sharedElements.add(containerView to "artist_container${id}")
+//        sharedContainerView?.also {
+//            sharedElements.add(sharedContainerView to "${SHARED_ARTIST_CONTAINER}${id}")
 //        }
-        nameView?.also {
-            sharedElements.add(nameView to "artist_name${id}")
+        sharedNameView?.also {
+            sharedElements.add(sharedNameView to "${SHARED_ARTIST_NAME}${id}")
         }
-        imageView?.also {
-            sharedElements.add(imageView to "artist_image${id}")
+        sharedImageView?.also {
+            sharedElements.add(sharedImageView to "${SHARED_ARTIST_IMAGE}${id}")
         }
         val extras = FragmentNavigatorExtras(*sharedElements.toTypedArray())
 
