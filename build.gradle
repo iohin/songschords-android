@@ -21,6 +21,9 @@ ext {
     junitVersion = "4.13.2"
     extJunitVersion = "1.1.5"
     espressoCoreVersion = "3.5.1"
+    mockitoVersion = "5.3.1"
+    mockitoKotlinVersion = "5.0.0"
+    coroutinesTestVersion = "1.7.1"
 
     kotlinPluginSerializationVersion = "1.8.10"
 
