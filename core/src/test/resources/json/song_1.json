@@ -1,0 +1,14 @@
+{
+  "artist": 1,
+  "artistName": "Artist 1",
+  "author": "Author 1",
+  "content": "Content 1",
+  "copyright": "Copyright 1",
+  "create_date": "2023-01-01T00:00:00.000000",
+  "end_date": null,
+  "foreign_id": 1,
+  "id": 1,
+  "name": "Song 1",
+  "resource_uri": "/api/v1/song/1/",
+  "update_date": "2023-01-01T00:00:00.000000"
+}

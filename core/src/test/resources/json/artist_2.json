@@ -1,0 +1,12 @@
+{
+  "create_date": "2023-01-02T00:00:00.000000",
+  "description": "Test Artist Description 2",
+  "end_date": null,
+  "foreign_id": 12,
+  "id": 2,
+  "image_url": "https://songschords/images/2.jpg",
+  "name": "Test Artist 2",
+  "name_aliases": "Test Artist Alias 2",
+  "resource_uri": "/api/v1/artist/2/",
+  "update_date": "2023-01-02T01:00:00.000000"
+}

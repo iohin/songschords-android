@@ -24,6 +24,7 @@ ext {
 
     kotlinPluginSerializationVersion = "1.8.10"
 
+    mockwebserverVersion = "4.11.0"
     retrofitVersion = "2.9.0"
     daggerVersion = "2.45"
     kotlinxSerializationVersion = "1.4.1"
