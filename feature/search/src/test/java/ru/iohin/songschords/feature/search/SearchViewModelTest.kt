@@ -58,4 +58,20 @@ class SearchViewModelTest {
 
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun `should error on load artists`() = runTest {
+        wheneverBlocking {
+            songRepository.getArtists(anyString(), eq(0), anyInt())
+        }.thenReturn(
+            Result.Error(Error("error"))
+        )
+
+        val searchViewModel = SearchViewModel(songRepository)
+
+        val expected = SearchState.ErrorSearchState("error")
+        val actual = searchViewModel.state.value
+
+        assertEquals(expected, actual)
+    }
 }
