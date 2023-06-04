@@ -8,7 +8,7 @@ import java.util.Date
 data class RestArtistFull(
     @SerialName("create_date")
     @Serializable(DateSerializer::class)
-    val createВate: Date?,
+    val createDate: Date?,
     val description: String,
     @SerialName("end_date")
     @Serializable(DateSerializer::class)
