@@ -4,8 +4,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.*
-import org.mockito.kotlin.wheneverBlocking
+import org.mockito.kotlin.*
 import ru.iohin.songschords.core.api.data.SongRepository
 import ru.iohin.songschords.core.api.entity.ArtistShort
 import ru.iohin.songschords.core.api.entity.Resource
@@ -23,7 +22,7 @@ class SearchViewModelTest {
     @Test
     fun `should load artists`() = runTest {
         wheneverBlocking {
-            songRepository.getArtists(anyString(), eq(0), anyInt())
+            songRepository.getArtists(any(), eq(0), any())
         }.thenReturn(
             Result.Success(
                 Resource(
@@ -34,7 +33,7 @@ class SearchViewModelTest {
             )
         )
         wheneverBlocking {
-            songRepository.getArtists(anyString(), eq(1), anyInt())
+            songRepository.getArtists(any(), eq(1), any())
         }.thenReturn(
             Result.Success(
                 Resource(
@@ -62,7 +61,7 @@ class SearchViewModelTest {
     @Test
     fun `should error on load artists`() = runTest {
         wheneverBlocking {
-            songRepository.getArtists(anyString(), eq(0), anyInt())
+            songRepository.getArtists(any(), eq(0), any())
         }.thenReturn(
             Result.Error(Error("error"))
         )
