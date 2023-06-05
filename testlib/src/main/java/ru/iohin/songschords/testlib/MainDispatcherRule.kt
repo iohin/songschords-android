@@ -1,4 +1,4 @@
-package ru.iohin.songschords.feature.search
+package ru.iohin.songschords.testlib
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

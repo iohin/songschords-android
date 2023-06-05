@@ -51,6 +51,8 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+
+    testImplementation project(":testlib")
     testImplementation "junit:junit:$junitVersion"
     testImplementation "androidx.test.ext:junit-ktx:$junitKtxVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion"

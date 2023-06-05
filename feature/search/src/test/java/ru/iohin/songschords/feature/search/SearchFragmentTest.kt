@@ -20,6 +20,7 @@ import ru.iohin.songschords.feature.search.ui.ArtistsAdapter
 import ru.iohin.songschords.feature.search.ui.SearchFragment
 import ru.iohin.songschords.feature.search.ui.SearchState
 import ru.iohin.songschords.feature.search.ui.SearchViewModel
+import ru.iohin.songschords.testlib.MainDispatcherRule
 
 
 @RunWith(AndroidJUnit4::class)

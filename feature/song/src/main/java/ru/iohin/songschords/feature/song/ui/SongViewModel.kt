@@ -17,11 +17,7 @@ class SongViewModel(private val songRepository: SongRepository) : ViewModel() {
     fun loadSong(id: Int) {
         viewModelScope.launch {
             when (val result = songRepository.getSong(id)) {
-                is Result.Success -> _state.value = SongState.SuccessSongState(Song(
-                    result.data.name,
-                    result.data.artistName,
-                    result.data.content.replace("[crd]", "").replace("[/crd]", "")
-                ))
+                is Result.Success -> _state.value = SongState.SuccessSongState(Song.of(result.data))
                 is Result.Error -> _state.value = SongState.ErrorSongState(result.exception.message ?: "")
                 is Result.Loading -> _state.value = SongState.LoadingSongState
             }
