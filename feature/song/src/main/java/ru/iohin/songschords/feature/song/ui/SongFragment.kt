@@ -3,6 +3,7 @@ package ru.iohin.songschords.feature.song.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,8 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.iohin.songschords.feature.song.R
 import ru.iohin.songschords.feature.song.di.SongFragmentComponent
@@ -34,7 +33,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
         SongFragmentComponent.getSongFragmentComponent(this).inject(this)
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     when (state) {
                         is SongState.SuccessSongState -> contentView.text = state.song.content
@@ -51,9 +50,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
     }
 
     private fun showError(message: String) {
-        MaterialAlertDialogBuilder(requireActivity())
-            .setMessage(message)
-            .show()
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
