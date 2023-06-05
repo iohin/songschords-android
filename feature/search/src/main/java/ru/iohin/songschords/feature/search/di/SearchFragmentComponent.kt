@@ -6,7 +6,6 @@ import dagger.Component
 import ru.iohin.songschords.core.api.di.ActivityProvider
 import ru.iohin.songschords.core.api.di.FragmentScope
 import ru.iohin.songschords.core.api.requireActivityProvider
-import ru.iohin.songschords.feature.search.di.DaggerSearchFragmentComponent
 import ru.iohin.songschords.feature.search.ui.SearchFragment
 
 @Component(

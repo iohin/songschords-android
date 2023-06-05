@@ -3,6 +3,7 @@ package ru.iohin.songschords.feature.search.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import ru.iohin.songschords.feature.artist.nav.NavigationToArtist
 import ru.iohin.songschords.core.api.navigation.AppNavigation
@@ -51,7 +51,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             .inject(this)
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     when(state) {
                         is SearchState.LoadingSearchState -> spinner.visibility = View.VISIBLE
@@ -73,9 +73,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun showError(message: String) {
-        MaterialAlertDialogBuilder(requireActivity())
-            .setMessage(message)
-            .show()
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
