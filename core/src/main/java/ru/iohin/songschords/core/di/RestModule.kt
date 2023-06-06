@@ -11,6 +11,7 @@ import ru.iohin.songschords.core.BuildConfig
 import ru.iohin.songschords.core.rest.AuthInterceptor
 import ru.iohin.songschords.core.rest.RestService
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 class RestModule {
@@ -22,6 +23,7 @@ class RestModule {
         .build()
 
     @Provides
+    @Singleton
     fun providesRestService() = Retrofit.Builder()
         .client(createClient())
         .baseUrl("${BuildConfig.REST_URL}${RestService.API_PATH}")

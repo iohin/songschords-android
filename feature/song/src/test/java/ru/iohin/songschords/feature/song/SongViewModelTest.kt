@@ -1,5 +1,6 @@
 package ru.iohin.songschords.feature.song
 
+import androidx.test.espresso.idling.CountingIdlingResource
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Rule
@@ -15,6 +16,7 @@ import ru.iohin.songschords.testlib.MainDispatcherRule
 
 class SongViewModelTest {
     private val songRepository: SongRepository = mock()
+    private val idlingResource: CountingIdlingResource = mock()
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -32,7 +34,7 @@ class SongViewModelTest {
         )
         wheneverBlocking { songRepository.getSong(any()) }.thenReturn(Result.Success(song))
 
-        val songViewModel = SongViewModel(songRepository)
+        val songViewModel = SongViewModel(songRepository, idlingResource)
         songViewModel.loadSong(1)
 
         val expected = SongState.SuccessSongState(Song.of(song))
@@ -45,7 +47,7 @@ class SongViewModelTest {
     fun `should error on load song`() = runTest {
         wheneverBlocking { songRepository.getSong(any()) }.thenReturn(Result.Error(Error("error")))
 
-        val songViewModel = SongViewModel(songRepository)
+        val songViewModel = SongViewModel(songRepository, idlingResource)
         songViewModel.loadSong(1)
 
         val expected = SongState.ErrorSongState("error")

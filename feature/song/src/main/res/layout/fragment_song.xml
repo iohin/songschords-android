@@ -47,6 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/song_content_description"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package ru.iohin.songschords.feature.search
 
+import androidx.test.espresso.idling.CountingIdlingResource
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Rule
@@ -16,6 +17,7 @@ import ru.iohin.songschords.testlib.MainDispatcherRule
 
 class SearchViewModelTest {
     private val songRepository: SongRepository = mock()
+    private val idlingResource: CountingIdlingResource = mock()
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -45,7 +47,7 @@ class SearchViewModelTest {
             )
         )
 
-        val searchViewModel = SearchViewModel(songRepository)
+        val searchViewModel = SearchViewModel(songRepository, idlingResource)
         searchViewModel.loadMore()
 
         val expected = SearchState.SearchResultsState(
@@ -67,7 +69,7 @@ class SearchViewModelTest {
             Result.Error(Error("error"))
         )
 
-        val searchViewModel = SearchViewModel(songRepository)
+        val searchViewModel = SearchViewModel(songRepository, idlingResource)
 
         val expected = SearchState.ErrorSearchState("error")
         val actual = searchViewModel.state.value
