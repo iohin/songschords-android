@@ -11,6 +11,7 @@ import ru.iohin.songschords.core.api.entity.ArtistShort
 import ru.iohin.songschords.core.api.entity.Resource
 import ru.iohin.songschords.core.api.entity.Result
 import ru.iohin.songschords.feature.search.ui.Artist
+import ru.iohin.songschords.feature.search.ui.SearchData
 import ru.iohin.songschords.feature.search.ui.SearchState
 import ru.iohin.songschords.feature.search.ui.SearchViewModel
 import ru.iohin.songschords.testlib.MainDispatcherRule
@@ -46,9 +47,11 @@ class SearchViewModelTest {
         searchViewModel.loadMore()
 
         val expected = SearchState.SearchResultsState(
-            listOf(
-                Artist.from(artist1),
-                Artist.from(artist2)
+            SearchData(
+                listOf(
+                    Artist.from(artist1),
+                    Artist.from(artist2)
+                )
             )
         )
         val actual = searchViewModel.state.value

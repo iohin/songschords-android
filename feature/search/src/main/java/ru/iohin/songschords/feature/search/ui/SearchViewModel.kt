@@ -17,9 +17,6 @@ class SearchViewModel(
     private val _state: MutableStateFlow<SearchState> = MutableStateFlow(SearchState.LoadingSearchState)
     val state: StateFlow<SearchState> = _state
 
-    private val _suggestions: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
-    val suggestions: StateFlow<List<String>> = _suggestions
-
     private var currentQuery = ""
     private var offset = 0
     private var canLoadMore = true
@@ -28,18 +25,35 @@ class SearchViewModel(
         search("")
     }
 
+    private fun getCurrentSearchState() = when (val state = _state.value) {
+        is SearchState.SearchResultsState -> state.searchData
+        else -> SearchData()
+    }
+
     fun loadSuggestions(query: String) {
         if (query.isEmpty()) {
-            _suggestions.value = listOf()
+            _state.value = SearchState.SearchResultsState(
+                SearchData(
+                    getCurrentSearchState().results,
+                    emptyList()
+                )
+            )
             return
         }
         viewModelScope.launch {
             when (val result = songRepository.getArtists(query)) {
-                is Result.Success -> {
-                    _suggestions.value = result.data.data.map { it.name }
-                }
-                is Result.Error -> _suggestions.value = listOf()
-                is Result.Loading -> _suggestions.value = listOf()
+                is Result.Success -> _state.value = SearchState.SearchResultsState(
+                    SearchData(
+                        getCurrentSearchState().results,
+                        result.data.data.map { it.name }
+                    )
+                )
+                else -> _state.value = SearchState.SearchResultsState(
+                    SearchData(
+                        getCurrentSearchState().results,
+                        emptyList()
+                    )
+                )
             }
         }
     }
@@ -62,14 +76,12 @@ class SearchViewModel(
             idlingResource.increment()
             when (val result = songRepository.getArtists(query, offset)) {
                 is Result.Success -> {
-                    val state = _state.value
-                    val artists = if (state is SearchState.SearchResultsState) {
-                        state.results.toMutableList()
-                    } else {
-                        mutableListOf()
-                    }
+                    val artists = getCurrentSearchState().results.toMutableList()
                     artists.addAll(result.data.data.map { Artist.from(it) })
-                    _state.value = SearchState.SearchResultsState(artists)
+                    _state.value = SearchState.SearchResultsState(SearchData(
+                        artists,
+                        getCurrentSearchState().suggestions
+                    ))
                     canLoadMore = result.data.data.size == result.data.limit
                     this@SearchViewModel.offset += result.data.data.size
                 }

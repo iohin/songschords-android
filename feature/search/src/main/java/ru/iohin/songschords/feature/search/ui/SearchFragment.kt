@@ -76,16 +76,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                         }
                         is SearchState.SearchResultsState -> {
                             spinner.visibility = View.GONE
-                            artistsAdapter.artists = state.results
+                            artistsAdapter.artists = state.searchData.results
+                            suggestionsAdapter.suggestions = state.searchData.suggestions
                         }
                     }
-                }
-            }
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.suggestions.collect { suggestions ->
-                    suggestionsAdapter.suggestions = suggestions
                 }
             }
         }
@@ -113,6 +107,23 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         searchBar = view.findViewById(R.id.open_search_bar)
         searchView = view.findViewById(R.id.open_search_view)
+        setupSearchView(searchView)
+        spinner = view.findViewById(R.id.spinner)
+        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = artistsAdapter
+
+        suggestionsRecyclerView = view.findViewById(R.id.search_suggestions)
+        suggestionsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        suggestionsRecyclerView.adapter = suggestionsAdapter
+
+        postponeEnterTransition()
+        recyclerView.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
+    }
+
+    private fun setupSearchView(searchView: SearchView) {
         searchView
             .editText
             .addTextChangedListener(object : TextWatcher {
@@ -133,18 +144,5 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
                 false
             }
-        spinner = view.findViewById(R.id.spinner)
-        recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = artistsAdapter
-
-        suggestionsRecyclerView = view.findViewById(R.id.search_suggestions)
-        suggestionsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        suggestionsRecyclerView.adapter = suggestionsAdapter
-
-        postponeEnterTransition()
-        recyclerView.doOnPreDraw {
-            startPostponedEnterTransition()
-        }
     }
 }

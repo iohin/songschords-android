@@ -17,6 +17,7 @@ import org.robolectric.shadows.ShadowToast
 import ru.iohin.songschords.feature.search.di.SearchFragmentComponent
 import ru.iohin.songschords.feature.search.ui.Artist
 import ru.iohin.songschords.feature.search.ui.ArtistsAdapter
+import ru.iohin.songschords.feature.search.ui.SearchData
 import ru.iohin.songschords.feature.search.ui.SearchFragment
 import ru.iohin.songschords.feature.search.ui.SearchState
 import ru.iohin.songschords.feature.search.ui.SearchViewModel
@@ -34,9 +35,6 @@ class SearchFragmentTest {
     fun `should display error`() = runTest {
         val flow = MutableStateFlow<SearchState>(SearchState.LoadingSearchState)
         whenever(searchViewModel.state).thenReturn(flow)
-
-        val suggestionsFlow = MutableStateFlow<List<String>>(listOf())
-        whenever(searchViewModel.suggestions).thenReturn(suggestionsFlow)
 
         val factoryMock = mock<SearchViewModel.Factory>()
         whenever(factoryMock.create(eq(SearchViewModel::class.java))).thenReturn(searchViewModel)
@@ -65,9 +63,6 @@ class SearchFragmentTest {
         val flow = MutableStateFlow<SearchState>(SearchState.LoadingSearchState)
         whenever(searchViewModel.state).thenReturn(flow)
 
-        val suggestionsFlow = MutableStateFlow<List<String>>(listOf())
-        whenever(searchViewModel.suggestions).thenReturn(suggestionsFlow)
-
         val factoryMock = mock<SearchViewModel.Factory>()
         whenever(factoryMock.create(eq(SearchViewModel::class.java))).thenReturn(searchViewModel)
         whenever(factoryMock.create(eq(SearchViewModel::class.java), any())).thenReturn(searchViewModel)
@@ -85,15 +80,17 @@ class SearchFragmentTest {
         }
         fragmentScenario.moveToState(Lifecycle.State.STARTED)
 
-        val expected = listOf(
-            Artist(1, "artist 1", null)
+        val expected = SearchData(
+            listOf(
+                Artist(1, "artist 1", null)
+            )
         )
         flow.emit(SearchState.SearchResultsState(expected))
 
         fragmentScenario.onFragment { fragment ->
             val recyclerView: RecyclerView? = fragment.view?.findViewById(R.id.recycler_view)
             val actual = (recyclerView?.adapter as ArtistsAdapter).artists
-            assertEquals(expected, actual)
+            assertEquals(expected.results, actual)
         }
     }
 }
