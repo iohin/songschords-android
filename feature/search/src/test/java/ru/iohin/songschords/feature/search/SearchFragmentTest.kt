@@ -35,11 +35,17 @@ class SearchFragmentTest {
         val flow = MutableStateFlow<SearchState>(SearchState.LoadingSearchState)
         whenever(searchViewModel.state).thenReturn(flow)
 
+        val suggestionsFlow = MutableStateFlow<List<String>>(listOf())
+        whenever(searchViewModel.suggestions).thenReturn(suggestionsFlow)
+
         val factoryMock = mock<SearchViewModel.Factory>()
         whenever(factoryMock.create(eq(SearchViewModel::class.java))).thenReturn(searchViewModel)
         whenever(factoryMock.create(eq(SearchViewModel::class.java), any())).thenReturn(searchViewModel)
 
-        val fragmentScenario = launchFragmentInContainer<SearchFragment>(initialState = Lifecycle.State.INITIALIZED)
+        val fragmentScenario = launchFragmentInContainer<SearchFragment>(
+            initialState = Lifecycle.State.INITIALIZED,
+            themeResId = com.google.android.material.R.style.Theme_Material3_DayNight_NoActionBar
+        )
         fragmentScenario.onFragment { fragment ->
             mockkObject(SearchFragmentComponent.Companion)
             every {
@@ -59,11 +65,17 @@ class SearchFragmentTest {
         val flow = MutableStateFlow<SearchState>(SearchState.LoadingSearchState)
         whenever(searchViewModel.state).thenReturn(flow)
 
+        val suggestionsFlow = MutableStateFlow<List<String>>(listOf())
+        whenever(searchViewModel.suggestions).thenReturn(suggestionsFlow)
+
         val factoryMock = mock<SearchViewModel.Factory>()
         whenever(factoryMock.create(eq(SearchViewModel::class.java))).thenReturn(searchViewModel)
         whenever(factoryMock.create(eq(SearchViewModel::class.java), any())).thenReturn(searchViewModel)
 
-        val fragmentScenario = launchFragmentInContainer<SearchFragment>(initialState = Lifecycle.State.INITIALIZED)
+        val fragmentScenario = launchFragmentInContainer<SearchFragment>(
+            initialState = Lifecycle.State.INITIALIZED,
+            themeResId = com.google.android.material.R.style.Theme_Material3_DayNight_NoActionBar
+        )
         fragmentScenario.onFragment { fragment ->
             mockkObject(SearchFragmentComponent.Companion)
             every {

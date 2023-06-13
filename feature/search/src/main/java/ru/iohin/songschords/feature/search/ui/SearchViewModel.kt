@@ -17,12 +17,31 @@ class SearchViewModel(
     private val _state: MutableStateFlow<SearchState> = MutableStateFlow(SearchState.LoadingSearchState)
     val state: StateFlow<SearchState> = _state
 
+    private val _suggestions: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
+    val suggestions: StateFlow<List<String>> = _suggestions
+
     private var currentQuery = ""
     private var offset = 0
     private var canLoadMore = true
 
     init {
         search("")
+    }
+
+    fun loadSuggestions(query: String) {
+        if (query.isEmpty()) {
+            _suggestions.value = listOf()
+            return
+        }
+        viewModelScope.launch {
+            when (val result = songRepository.getArtists(query)) {
+                is Result.Success -> {
+                    _suggestions.value = result.data.data.map { it.name }
+                }
+                is Result.Error -> _suggestions.value = listOf()
+                is Result.Loading -> _suggestions.value = listOf()
+            }
+        }
     }
 
     fun search(query: String) {

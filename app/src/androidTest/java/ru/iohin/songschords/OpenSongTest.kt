@@ -37,14 +37,14 @@ class OpenSongTest {
 
     @Test
     fun shouldOpenSong() {
-        Espresso.onView(ViewMatchers.withClassName(Matchers.`is`(RecyclerView::class.java.canonicalName)))
+        Espresso.onView(ViewMatchers.withId(ru.iohin.songschords.feature.search.R.id.recycler_view))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0, click()
                 )
             )
 
-        Espresso.onView(ViewMatchers.withClassName(Matchers.`is`(RecyclerView::class.java.canonicalName)))
+        Espresso.onView(ViewMatchers.withId(ru.iohin.songschords.feature.search.R.id.recycler_view))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     0, click()

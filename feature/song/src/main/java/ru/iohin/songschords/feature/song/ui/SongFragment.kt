@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import ru.iohin.songschords.feature.song.R
 import ru.iohin.songschords.feature.song.di.SongFragmentComponent
 import ru.iohin.songschords.feature.song.nav.NavigationToSong
+import java.net.URLDecoder
 import javax.inject.Inject
 
 class SongFragment : Fragment(R.layout.fragment_song) {
@@ -73,7 +74,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
             "${NavigationToSong.SHARED_CONTAINER}${args.id}"
         )
 
-        songNameView.text = args.name
-        artistNameView.text = args.artistName
+        songNameView.text = URLDecoder.decode(args.name, "UTF-8")
+        artistNameView.text = URLDecoder.decode(args.artistName, "UTF-8")
     }
 }
