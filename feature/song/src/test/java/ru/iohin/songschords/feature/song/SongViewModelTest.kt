@@ -37,7 +37,7 @@ class SongViewModelTest {
         val songViewModel = SongViewModel(songRepository, idlingResource)
         songViewModel.loadSong(1)
 
-        val expected = SongState.SuccessSongState(Song.of(song))
+        val expected = SongState.SuccessSongState(Song.from(song))
         val actual = songViewModel.state.value
 
         assertEquals(expected, actual)

@@ -2,13 +2,10 @@ package ru.iohin.songschords.core.data
 
 import ru.iohin.songschords.core.rest.RestSongHitRequest
 import ru.iohin.songschords.core.rest.RestService
-import ru.iohin.songschords.core.api.entity.ArtistFull
 import ru.iohin.songschords.core.api.entity.Resource
 import ru.iohin.songschords.core.api.entity.Result
-import ru.iohin.songschords.core.api.entity.SongFull
 import ru.iohin.songschords.core.api.entity.SongShort
 import ru.iohin.songschords.core.api.data.SongRepository
-import ru.iohin.songschords.core.api.entity.ArtistShort
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -21,16 +18,7 @@ class SongRepositoryImpl @Inject constructor(private val restService: RestServic
         val response = restService.getArtists(searchName, offset, limit)
         val body = response.body()
         if (response.isSuccessful && body != null) {
-            Result.Success(Resource(
-                totalCount = body.meta.totalCount,
-                limit = body.meta.limit,
-                offset = body.meta.offset,
-                data = body.objects.map { ArtistShort(
-                    id = it.id,
-                    name = it.name,
-                    imageUrl = it.imageUrl
-                ) }
-            ))
+            Result.Success(body.toResource { it.toArtistShortList() })
         } else {
             Result.Error(Error(response.message()))
         }
@@ -42,15 +30,7 @@ class SongRepositoryImpl @Inject constructor(private val restService: RestServic
         val response = restService.getArtist(id)
         val body = response.body()
         if (response.isSuccessful && body != null) {
-            Result.Success(
-                ArtistFull(
-                body.id,
-                body.name,
-                body.nameAliases.split(","),
-                body.description,
-                body.imageUrl
-            )
-            )
+            Result.Success(body.toArtistFull())
         } else {
             Result.Error(Error(response.message()))
         }
@@ -68,17 +48,7 @@ class SongRepositoryImpl @Inject constructor(private val restService: RestServic
         val response = restService.getSongs(artistId, searchName, searchContent, offset, limit)
         val body = response.body()
         if (response.isSuccessful && body != null) {
-            Result.Success(Resource(
-                totalCount = body.meta.totalCount,
-                limit = body.meta.limit,
-                offset = body.meta.offset,
-                data = body.objects.map { SongShort(
-                    it.id,
-                    it.name,
-                    it.artist,
-                    it.artistName
-                ) }
-            ))
+            Result.Success(body.toResource { it.toSongShortList() })
         } else {
             Result.Error(Error(response.message()))
         }
@@ -90,17 +60,7 @@ class SongRepositoryImpl @Inject constructor(private val restService: RestServic
         val response = restService.getSong(id)
         val body = response.body()
         if (response.isSuccessful && body != null) {
-            Result.Success(
-                SongFull(
-                body.id,
-                body.name,
-                body.artist,
-                body.artistName,
-                body.author,
-                body.content,
-                body.copyright
-            )
-            )
+            Result.Success(body.toSongFull())
         } else {
             Result.Error(Error(response.message()))
         }

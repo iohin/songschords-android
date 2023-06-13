@@ -8,7 +8,7 @@ data class Song(
     val content: String
 ) {
     companion object {
-        fun of(songFull: SongFull) = Song(
+        fun from(songFull: SongFull) = Song(
             songFull.name,
             songFull.artistName,
             songFull.content.replace("[crd]", "").replace("[/crd]", "")
