@@ -14,9 +14,7 @@ import javax.inject.Singleton
 class TestRestModule {
     @Provides
     @Singleton
-    fun providesMockWebServer() = MockWebServer().apply {
-        dispatcher = MockResponseDispatcher()
-    }
+    fun providesMockWebServer() = MockWebServer()
 
     @Provides
     fun providesRestService(server: MockWebServer) = Retrofit.Builder()

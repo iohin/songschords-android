@@ -1,6 +1,10 @@
 package ru.iohin.songschords.core
 
 import kotlinx.coroutines.runBlocking
+import okhttp3.mockwebserver.Dispatcher
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Test
 import org.junit.Assert.*
 
@@ -14,6 +18,8 @@ import ru.iohin.songschords.core.api.entity.SongShort
 import javax.inject.Inject
 class RepositoryUnitTest {
     @Inject
+    lateinit var mockWebServer: MockWebServer
+    @Inject
     lateinit var songRepository: SongRepository
 
     init {
@@ -23,6 +29,12 @@ class RepositoryUnitTest {
     @Test
     fun `should get artists`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(ResourceHelper.getJson("json/artists.json"))
+            )
+
             val expected = Result.Success(
                 Resource(2, 20, 0,
                     listOf(
@@ -49,6 +61,12 @@ class RepositoryUnitTest {
     @Test
     fun `should get artist with id 1`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(ResourceHelper.getJson("json/artist_1.json"))
+            )
+
             val expected = Result.Success(
                 ArtistFull(
                     id = 1,
@@ -68,6 +86,12 @@ class RepositoryUnitTest {
     @Test
     fun `should get songs`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(ResourceHelper.getJson("json/songs.json"))
+            )
+
             val expected = Result.Success(
                 Resource(2, 20, 0,
                     listOf(
@@ -96,6 +120,12 @@ class RepositoryUnitTest {
     @Test
     fun `should get song with id 1`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(ResourceHelper.getJson("json/song_1.json"))
+            )
+
             val expected = Result.Success(
                 SongFull(
                     artistId = 1,
@@ -117,6 +147,20 @@ class RepositoryUnitTest {
     @Test
     fun `should send hit for song 1`() {
         runBlocking {
+            val expectedBody = """{"song":"/api/v1/song/1/"}"""
+
+            mockWebServer.dispatcher = object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    return if (request.body.readUtf8() == expectedBody) {
+                        MockResponse()
+                            .setResponseCode(200)
+                    } else {
+                        MockResponse()
+                            .setResponseCode(500)
+                    }
+                }
+            }
+
             val expected = Result.Success(Unit)
             val actual = songRepository.sendHit(1) as Result.Success
 
@@ -127,6 +171,20 @@ class RepositoryUnitTest {
     @Test
     fun `should send hit failure`() {
         runBlocking {
+            val expectedBody = """{"song":"/api/v1/song/1/"}"""
+
+            mockWebServer.dispatcher = object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    return if (request.body.readUtf8() == expectedBody) {
+                        MockResponse()
+                            .setResponseCode(200)
+                    } else {
+                        MockResponse()
+                            .setResponseCode(500)
+                    }
+                }
+            }
+
             val expected = Result.Error(Error("Server Error")).exception.message
             val actual = (songRepository.sendHit(2) as Result.Error).exception.message
 
@@ -137,6 +195,11 @@ class RepositoryUnitTest {
     @Test
     fun `should error`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(404)
+            )
+
             val expected = Result.Error(Error("Client Error")).exception.message
             val actual = (songRepository.getArtist(3) as Result.Error).exception.message
 

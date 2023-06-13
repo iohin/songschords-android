@@ -1,11 +1,15 @@
 package ru.iohin.songschords.core
 
 import kotlinx.coroutines.runBlocking
+import okhttp3.mockwebserver.Dispatcher
+import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import ru.iohin.songschords.core.ResourceHelper.getJson
 import ru.iohin.songschords.core.rest.RestArtistFull
 import ru.iohin.songschords.core.rest.RestArtistShort
 import ru.iohin.songschords.core.rest.RestResource
@@ -42,6 +46,12 @@ class RestServiceUnitTest {
     @Test
     fun `should load artists`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(getJson("json/artists.json"))
+            )
+
             val expectedResponse = RestResource(
                 meta = RestResource.Meta(
                     limit = 20,
@@ -77,6 +87,12 @@ class RestServiceUnitTest {
     @Test
     fun `should load artist with id 1`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(getJson("json/artist_1.json"))
+            )
+
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ROOT)
 
             val expectedResponse = RestArtistFull(
@@ -101,6 +117,12 @@ class RestServiceUnitTest {
     @Test
     fun `should load artist with id 2`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(getJson("json/artist_2.json"))
+            )
+
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ROOT)
 
             val expectedResponse = RestArtistFull(
@@ -125,6 +147,12 @@ class RestServiceUnitTest {
     @Test
     fun `should load songs`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(getJson("json/songs.json"))
+            )
+
             val expectedResponse = RestResource(
                 meta = RestResource.Meta(
                     limit = 20,
@@ -160,6 +188,12 @@ class RestServiceUnitTest {
     @Test
     fun `should load song with id 1`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(200)
+                    .setBody(getJson("json/song_1.json"))
+            )
+
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ROOT)
 
             val expectedResponse = RestSongFull(
@@ -186,6 +220,20 @@ class RestServiceUnitTest {
     @Test
     fun `should send hit to song with id 1`() {
         runBlocking {
+            val expectedBody = """{"song":"/api/v1/song/1/"}"""
+
+            mockWebServer.dispatcher = object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    return if (request.body.readUtf8() == expectedBody) {
+                        MockResponse()
+                            .setResponseCode(200)
+                    } else {
+                        MockResponse()
+                            .setResponseCode(500)
+                    }
+                }
+            }
+
             val expected = true
             val actual = restService.sendHit(RestSongHitRequest.build(1)).isSuccessful
 
@@ -196,6 +244,20 @@ class RestServiceUnitTest {
     @Test
     fun `should send hit failure`() {
         runBlocking {
+            val expectedBody = """{"song":"/api/v1/song/1/"}"""
+
+            mockWebServer.dispatcher = object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    return if (request.body.readUtf8() == expectedBody) {
+                        MockResponse()
+                            .setResponseCode(200)
+                    } else {
+                        MockResponse()
+                            .setResponseCode(500)
+                    }
+                }
+            }
+
             val expected = 500
             val actual = restService.sendHit(RestSongHitRequest.build(2)).code()
 
@@ -206,6 +268,11 @@ class RestServiceUnitTest {
     @Test
     fun `should response 404`() {
         runBlocking {
+            mockWebServer.enqueue(
+                MockResponse()
+                    .setResponseCode(404)
+            )
+
             val expectedCode = 404
             val actualCode = restService.getSong(2).code()
 
