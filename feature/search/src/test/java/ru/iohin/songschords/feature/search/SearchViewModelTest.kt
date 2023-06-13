@@ -24,26 +24,21 @@ class SearchViewModelTest {
 
     @Test
     fun `should load artists`() = runTest {
+        val artist1 = ArtistShort(1, "song 1", "imageUrl")
+        val artist2 = ArtistShort(2, "song 2", "imageUrl2")
+
         wheneverBlocking {
             songRepository.getArtists(any(), eq(0), any())
         }.thenReturn(
             Result.Success(
-                Resource(
-                    1, 1, 0, listOf(
-                        ArtistShort(1, "song 1", "imageUrl")
-                    )
-                )
+                Resource(1, 1, 0, listOf(artist1))
             )
         )
         wheneverBlocking {
             songRepository.getArtists(any(), eq(1), any())
         }.thenReturn(
             Result.Success(
-                Resource(
-                    1, 1, 1, listOf(
-                        ArtistShort(2, "song 2", "imageUrl2")
-                    )
-                )
+                Resource(1, 1, 1, listOf(artist2))
             )
         )
 
@@ -52,8 +47,8 @@ class SearchViewModelTest {
 
         val expected = SearchState.SearchResultsState(
             listOf(
-                Artist(1, "song 1", "imageUrl"),
-                Artist(2, "song 2", "imageUrl2")
+                Artist.from(artist1),
+                Artist.from(artist2)
             )
         )
         val actual = searchViewModel.state.value

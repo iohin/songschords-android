@@ -45,13 +45,7 @@ class ArtistViewModel(
             when (val result = songRepository.getArtist(id)) {
                 is Result.Success -> {
                     _state.value = ArtistState.SuccessArtistState(
-                        Artist(
-                            result.data.id,
-                            result.data.name,
-                            result.data.imageUrl,
-                            result.data.description,
-                            getCurrentArtistState().songs
-                        )
+                        Artist.from(result.data, getCurrentArtistState().songs)
                     )
                 }
 
@@ -71,12 +65,7 @@ class ArtistViewModel(
                 is Result.Success -> {
                     val currentArtist = getCurrentArtistState()
                     val songs = currentArtist.songs.toMutableList()
-                    songs.addAll(result.data.data.map {
-                        Artist.Song(
-                            it.id,
-                            it.name
-                        )
-                    })
+                    songs.addAll(result.data.data.map { Artist.Song.from(it) })
                     _state.value = ArtistState.SuccessArtistState(
                         currentArtist.copy(
                             songs = songs

@@ -49,13 +49,7 @@ class SearchViewModel(
                     } else {
                         mutableListOf()
                     }
-                    artists.addAll(result.data.data.map {
-                        Artist(
-                            it.id,
-                            it.name,
-                            it.imageUrl
-                        )
-                    })
+                    artists.addAll(result.data.data.map { Artist.from(it) })
                     _state.value = SearchState.SearchResultsState(artists)
                     canLoadMore = result.data.data.size == result.data.limit
                     this@SearchViewModel.offset += result.data.data.size
