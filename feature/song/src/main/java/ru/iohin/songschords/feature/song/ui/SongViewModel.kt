@@ -22,7 +22,10 @@ class SongViewModel(
         viewModelScope.launch {
             idlingResource.increment()
             when (val result = songRepository.getSong(id)) {
-                is Result.Success -> _state.value = SongState.SuccessSongState(Song.from(result.data))
+                is Result.Success -> {
+                    _state.value = SongState.SuccessSongState(Song.from(result.data))
+                    songRepository.sendHit(id)
+                }
                 is Result.Error -> _state.value =
                     SongState.ErrorSongState(result.exception.message ?: "")
 
