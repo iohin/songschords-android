@@ -53,6 +53,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
             appNavigation.getNavigation(NavigationToSong::class)?.navigate(
                 song.id,
                 song.name,
+                args.id,
                 args.name,
                 null,
                 sharedNameView,
@@ -61,6 +62,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
         }
     }
     private lateinit var spinner: ProgressBar
+    private var postponedTransitions = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,18 +71,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state.collect { state ->
-                    when (state) {
-                        is ArtistState.LoadingArtistState -> spinner.visibility = View.VISIBLE
-                        is ArtistState.ErrorArtistState -> {
-                            spinner.visibility = View.GONE
-                            showError(state.message)
-                        }
-                        is ArtistState.SuccessArtistState -> {
-                            spinner.visibility = View.GONE
-                            descriptionTextView.text = state.result.description
-                            songsAdapter.songs = state.result.songs
-                        }
-                    }
+                    applyState(state)
                 }
             }
         }
@@ -89,6 +80,21 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
 
         sharedElementEnterTransition = TransitionInflater.from(requireContext())
             .inflateTransition(android.R.transition.move)
+    }
+
+    private fun applyState(state: ArtistState) {
+        when (state) {
+            is ArtistState.LoadingArtistState -> spinner.visibility = View.VISIBLE
+            is ArtistState.ErrorArtistState -> {
+                spinner.visibility = View.GONE
+                showError(state.message)
+            }
+            is ArtistState.SuccessArtistState -> {
+                spinner.visibility = View.GONE
+                descriptionTextView.text = state.result.description
+                songsAdapter.songs = state.result.songs
+            }
+        }
     }
 
     private fun showError(message: String) {
@@ -111,7 +117,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
             imageView,
             "${SHARED_ARTIST_IMAGE}${args.id}"
         )
-        postponeEnterTransition()
+        addPostponeEnterTransition()
         Glide.with(this)
             .load(args.imageUrl)
             .listener(object : RequestListener<Drawable> {
@@ -121,7 +127,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
                     target: Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    startPostponedEnterTransition()
+                    tryStartPostponedEnterTransition()
                     return false
                 }
 
@@ -132,7 +138,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    startPostponedEnterTransition()
+                    tryStartPostponedEnterTransition()
                     return false
                 }
             })
@@ -142,8 +148,24 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = songsAdapter
-        postponeEnterTransition()
+        addPostponeEnterTransition()
         recyclerView.doOnPreDraw {
+            tryStartPostponedEnterTransition()
+        }
+
+        applyState(viewModel.state.value)
+    }
+
+    private fun addPostponeEnterTransition() {
+        if (postponedTransitions == 0) {
+            postponeEnterTransition()
+        }
+        postponedTransitions++
+    }
+
+    private fun tryStartPostponedEnterTransition() {
+        postponedTransitions--
+        if (postponedTransitions == 0) {
             startPostponedEnterTransition()
         }
     }

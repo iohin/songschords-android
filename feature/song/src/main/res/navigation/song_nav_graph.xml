@@ -14,9 +14,12 @@
             android:name="name"
             app:argType="string" />
         <argument
+            android:name="artistId"
+            app:argType="integer" />
+        <argument
             android:name="artistName"
             app:argType="string" />
         <deepLink
-            app:uri="android-app://ru.iohin.songschords/song_fragment/{id}/{name}/{artistName}" />
+            app:uri="android-app://ru.iohin.songschords/song_fragment/{id}/{name}/{artistId}/{artistName}" />
     </fragment>
 </navigation>

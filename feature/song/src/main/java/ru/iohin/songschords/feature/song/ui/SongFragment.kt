@@ -67,7 +67,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
         )
         ViewCompat.setTransitionName(
             artistNameView,
-            "${NavigationToSong.SHARED_ARTIST_NAME}${args.id}"
+            "${NavigationToSong.SHARED_ARTIST_NAME}${args.artistId}"
         )
         ViewCompat.setTransitionName(
             contentView,

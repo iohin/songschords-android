@@ -6,6 +6,7 @@ interface NavigationToSong {
     fun navigate(
         id: Int,
         name: String,
+        artistId: Int,
         artistName: String,
         sharedContainerView: View?,
         sharedNameView: View?,

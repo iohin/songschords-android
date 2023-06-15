@@ -12,6 +12,7 @@ class NavigationToSongImpl(private val navControllerHolder: NavControllerHolder)
     override fun navigate(
         id: Int,
         name: String,
+        artistId: Int,
         artistName: String,
         sharedContainerView: View?,
         sharedNameView: View?,
@@ -22,13 +23,13 @@ class NavigationToSongImpl(private val navControllerHolder: NavControllerHolder)
             sharedElements.add(sharedNameView to "${NavigationToSong.SHARED_NAME}${id}")
         }
         sharedArtistNameView?.also {
-            sharedElements.add(sharedArtistNameView to "${NavigationToSong.SHARED_ARTIST_NAME}${id}")
+            sharedElements.add(sharedArtistNameView to "${NavigationToSong.SHARED_ARTIST_NAME}${artistId}")
         }
         val extras = FragmentNavigatorExtras(*sharedElements.toTypedArray())
         val encodedName = URLEncoder.encode(name, "UTF-8")
         val encodedArtistName = URLEncoder.encode(artistName, "UTF-8")
         val request = NavDeepLinkRequest.Builder
-            .fromUri("android-app://ru.iohin.songschords/song_fragment/$id/$encodedName/$encodedArtistName".toUri())
+            .fromUri("android-app://ru.iohin.songschords/song_fragment/$id/$encodedName/$artistId/$encodedArtistName".toUri())
             .build()
         navControllerHolder.navController.navigate(request, null, extras)
     }
