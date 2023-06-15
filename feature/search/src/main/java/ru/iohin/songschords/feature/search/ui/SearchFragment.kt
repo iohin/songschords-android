@@ -110,6 +110,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun performQuery(query: String) {
+        artistsAdapter.artists = emptyList()
         searchBar.text = query
         searchView.hide()
         viewModel.search(query)
