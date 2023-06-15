@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -138,21 +139,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private fun setupSearchView(searchView: SearchView) {
         searchView
             .editText
-            .addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            .doOnTextChanged { s: CharSequence?, start: Int, before: Int, count: Int ->
+                if (!searchView.isShowing) return@doOnTextChanged
+                if (s?.isEmpty() == true) {
+                    searchBar.text = ""
+                    viewModel.search("")
+                } else {
+                    viewModel.loadSuggestions(s.toString())
                 }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (s?.isEmpty() == true) {
-                        searchBar.text = ""
-                        viewModel.search("")
-                    } else {
-                        viewModel.loadSuggestions(s.toString())
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {}
-            })
+            }
         searchView
             .editText
             .setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
