@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -59,11 +60,26 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             performQuery(suggestion)
         }
     }
+    private val onBackPressedCallback = object: OnBackPressedCallback(true) {
+
+
+        override fun handleOnBackPressed() {
+            if (searchView.isShowing) {
+                searchView.hide()
+            } else {
+                isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+                isEnabled = true
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         SearchFragmentComponent.getSearchFragmentComponent(this)
             .inject(this)
+
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -100,10 +116,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val hold = Hold()
-//        hold.addTarget(view)
-//        hold.duration = 150
-//        exitTransition = hold
 
         searchBar = view.findViewById(R.id.open_search_bar)
         searchView = view.findViewById(R.id.open_search_view)
@@ -131,7 +143,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    viewModel.loadSuggestions(s.toString())
+                    if (s?.isEmpty() == true) {
+                        searchBar.text = ""
+                        viewModel.search("")
+                    } else {
+                        viewModel.loadSuggestions(s.toString())
+                    }
                 }
 
                 override fun afterTextChanged(s: Editable?) {}
