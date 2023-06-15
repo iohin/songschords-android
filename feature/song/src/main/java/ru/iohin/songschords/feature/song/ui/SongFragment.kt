@@ -1,5 +1,6 @@
 package ru.iohin.songschords.feature.song.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -16,7 +17,6 @@ import kotlinx.coroutines.launch
 import ru.iohin.songschords.feature.song.R
 import ru.iohin.songschords.feature.song.di.SongFragmentComponent
 import ru.iohin.songschords.feature.song.nav.NavigationToSong
-import java.net.URLDecoder
 import javax.inject.Inject
 
 class SongFragment : Fragment(R.layout.fragment_song) {
@@ -75,7 +75,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
             "${NavigationToSong.SHARED_CONTAINER}${args.id}"
         )
 
-        songNameView.text = URLDecoder.decode(args.name, "UTF-8")
-        artistNameView.text = URLDecoder.decode(args.artistName, "UTF-8")
+        songNameView.text = Uri.decode(args.name)
+        artistNameView.text = Uri.decode(args.artistName)
     }
 }

@@ -1,6 +1,7 @@
 package ru.iohin.songschords.feature.artist.ui
 
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -30,7 +31,6 @@ import ru.iohin.songschords.feature.artist.nav.NavigationToArtist.Companion.SHAR
 import ru.iohin.songschords.feature.artist.R
 import ru.iohin.songschords.feature.artist.di.ArtistFragmentComponent
 import ru.iohin.songschords.feature.song.nav.NavigationToSong
-import java.net.URLDecoder
 import javax.inject.Inject
 
 class ArtistFragment : Fragment(R.layout.fragment_artist) {
@@ -106,7 +106,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         nameTextView = view.findViewById(R.id.artist_name)
-        nameTextView.text = URLDecoder.decode(args.name, "UTF-8")
+        nameTextView.text = Uri.decode(args.name)
         ViewCompat.setTransitionName(
             nameTextView,
             "${SHARED_ARTIST_NAME}${args.id}"
