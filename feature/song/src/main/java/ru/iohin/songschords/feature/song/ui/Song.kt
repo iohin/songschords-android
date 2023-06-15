@@ -8,7 +8,7 @@ import ru.iohin.songschords.core.api.entity.SongFull
 data class Song(
     val name: String,
     val artistName: String,
-    val content: Spannable
+    val content: CharSequence
 ) {
     companion object {
         fun from(songFull: SongFull): Song {

@@ -1,6 +1,7 @@
 package ru.iohin.songschords.feature.song
 
 import android.os.Bundle
+import android.text.SpannableString
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso
@@ -16,6 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.*
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowToast
 import ru.iohin.songschords.feature.song.di.SongFragmentComponent
 import ru.iohin.songschords.feature.song.ui.Song
@@ -25,6 +27,7 @@ import ru.iohin.songschords.feature.song.ui.SongViewModel
 import ru.iohin.songschords.testlib.MainDispatcherRule
 
 @RunWith(AndroidJUnit4::class)
+@Config(application = TestApp::class)
 class SongFragmentTest {
     private val songViewModel: SongViewModel = mock()
 
@@ -46,6 +49,7 @@ class SongFragmentTest {
                 fragmentArgs = Bundle().apply {
                     putInt("id", 1)
                     putString("name", "song 1")
+                    putInt("artistId", 1)
                     putString("artistName", "artist 1")
                 }
             )
@@ -77,6 +81,7 @@ class SongFragmentTest {
                 fragmentArgs = Bundle().apply {
                     putInt("id", 1)
                     putString("name", "song 1")
+                    putInt("artistId", 1)
                     putString("artistName", "artist 1")
                 }
             )
@@ -91,7 +96,7 @@ class SongFragmentTest {
         flow.emit(SongState.SuccessSongState(Song(
             "song 1",
             "artist 1",
-            "content 1"
+            SpannableString("content 1")
         )))
 
         Espresso.onView(ViewMatchers.withId(R.id.song_name))
