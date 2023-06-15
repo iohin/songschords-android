@@ -36,7 +36,7 @@ class ArtistsAdapter: Adapter<ArtistViewHolder>() {
                     sharedImageView
                 )
             }
-        if (position == artists.size - 1) {
+        if (position == artists.size - 5) {
             onBottomReached?.invoke()
         }
     }
