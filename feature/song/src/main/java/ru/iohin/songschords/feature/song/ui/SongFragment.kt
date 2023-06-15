@@ -37,7 +37,8 @@ class SongFragment : Fragment(R.layout.fragment_song) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     when (state) {
-                        is SongState.SuccessSongState -> contentView.text = state.song.content
+                        is SongState.SuccessSongState ->
+                            contentView.text = ContentConvertor.convert(state.song.content)
                         is SongState.ErrorSongState -> showError(state.message)
                         is SongState.LoadingSongState -> {}
                     }

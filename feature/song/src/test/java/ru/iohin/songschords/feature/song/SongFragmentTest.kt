@@ -1,7 +1,6 @@
 package ru.iohin.songschords.feature.song
 
 import android.os.Bundle
-import android.text.SpannableString
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso
@@ -20,6 +19,7 @@ import org.mockito.kotlin.*
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowToast
 import ru.iohin.songschords.feature.song.di.SongFragmentComponent
+import ru.iohin.songschords.feature.song.ui.ContentConvertor
 import ru.iohin.songschords.feature.song.ui.Song
 import ru.iohin.songschords.feature.song.ui.SongFragment
 import ru.iohin.songschords.feature.song.ui.SongState
@@ -93,10 +93,13 @@ class SongFragmentTest {
 
         fragmentScenario.moveToState(Lifecycle.State.STARTED)
 
+        mockkObject(ContentConvertor)
+        every { ContentConvertor.convert("content 1") } returns "content 1"
+
         flow.emit(SongState.SuccessSongState(Song(
             "song 1",
             "artist 1",
-            SpannableString("content 1")
+            "content 1"
         )))
 
         Espresso.onView(ViewMatchers.withId(R.id.song_name))

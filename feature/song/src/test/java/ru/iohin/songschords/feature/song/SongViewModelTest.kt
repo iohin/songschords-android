@@ -1,11 +1,8 @@
 package ru.iohin.songschords.feature.song
 
-import android.text.Html
-import android.text.SpannableString
 import androidx.test.espresso.idling.CountingIdlingResource
 import io.mockk.every
 import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Rule
@@ -14,6 +11,7 @@ import org.mockito.kotlin.*
 import ru.iohin.songschords.core.api.data.SongRepository
 import ru.iohin.songschords.core.api.entity.Result
 import ru.iohin.songschords.core.api.entity.SongFull
+import ru.iohin.songschords.feature.song.ui.ContentConvertor
 import ru.iohin.songschords.feature.song.ui.Song
 import ru.iohin.songschords.feature.song.ui.SongState
 import ru.iohin.songschords.feature.song.ui.SongViewModel
@@ -38,8 +36,8 @@ class SongViewModelTest {
             copyright = "copyright 1",
         )
         wheneverBlocking { songRepository.getSong(any()) }.thenReturn(Result.Success(song))
-        mockkObject(Song.Companion)
-        every { Song.from(song) } returns Song("song 1", "artist 1", "content 1")
+        mockkObject(ContentConvertor)
+        every { ContentConvertor.convert("content 1") } returns "content 1"
 
         val songViewModel = SongViewModel(songRepository, idlingResource)
         songViewModel.loadSong(1)
