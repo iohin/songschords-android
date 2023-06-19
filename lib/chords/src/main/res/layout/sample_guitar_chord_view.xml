@@ -1,0 +1,151 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/chords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:flow_horizontalGap="10dp"
+        app:flow_verticalGap="10dp"
+        app:flow_wrapMode="chain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:constraint_referenced_ids="cb,c,csharp,db,d,dsharp,eb,e,fb,f,fsharp,gb,g,gsharp,ab,a,asharp,bb,b"
+        />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/cb"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:padding="10dp"
+        app:name="Cb" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="C" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/csharp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="C#" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/db"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="Db" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="D" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/dsharp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="D#" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/eb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="Eb" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/e"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="E" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/fb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="Fb" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/f"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="F" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/fsharp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="F#" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/gb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="Gb" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="G" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/gsharp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="G#" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/ab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="Ab" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="A" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/asharp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="A#" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/bb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="Bb" />
+
+    <ru.iohin.chords.GuitarChordView
+        android:id="@+id/b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:name="B" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
