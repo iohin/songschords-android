@@ -85,7 +85,7 @@ class GuitarChordView : View {
 
     private val minTextSize = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP,
-        10f,
+        12f,
         context.resources.displayMetrics
     )
 

@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import kotlinx.coroutines.launch
+import ru.iohin.chords.ChordsListView
 import ru.iohin.songschords.feature.song.R
 import ru.iohin.songschords.feature.song.di.SongFragmentComponent
 import ru.iohin.songschords.feature.song.nav.NavigationToSong
@@ -27,6 +28,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
 
     private lateinit var songNameView: TextView
     private lateinit var artistNameView: TextView
+    private lateinit var chordsListView: ChordsListView
     private lateinit var contentView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +39,10 @@ class SongFragment : Fragment(R.layout.fragment_song) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     when (state) {
-                        is SongState.SuccessSongState ->
+                        is SongState.SuccessSongState -> {
+                            chordsListView.chords = state.song.chords.toTypedArray()
                             contentView.text = ContentConvertor.convert(state.song.content)
+                        }
                         is SongState.ErrorSongState -> showError(state.message)
                         is SongState.LoadingSongState -> {}
                     }
@@ -60,6 +64,7 @@ class SongFragment : Fragment(R.layout.fragment_song) {
 
         songNameView = view.findViewById(R.id.song_name)
         artistNameView = view.findViewById(R.id.artist_name)
+        chordsListView = view.findViewById(R.id.chords_list)
         contentView = view.findViewById(R.id.content)
 
         ViewCompat.setTransitionName(

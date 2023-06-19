@@ -99,6 +99,7 @@ class SongFragmentTest {
         flow.emit(SongState.SuccessSongState(Song(
             "song 1",
             "artist 1",
+            emptyList(),
             "content 1"
         )))
 

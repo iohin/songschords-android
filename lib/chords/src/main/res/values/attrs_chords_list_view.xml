@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="ChordsListView">
+        <attr name="cordColor" format="color" />
+    </declare-styleable>
+</resources>
