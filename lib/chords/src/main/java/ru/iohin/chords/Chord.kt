@@ -53,6 +53,9 @@ open class Chord(val chordName: String) {
 
     init {
         var baseNote = chordName[0].uppercase()
+        if (baseNote.uppercase() == "H") {
+            baseNote = "B"
+        }
         var chordParts = chordName.substring(1)
         if (chordParts.isNotEmpty() && chordParts[0] == '#') {
             baseNote += chordParts[0]
