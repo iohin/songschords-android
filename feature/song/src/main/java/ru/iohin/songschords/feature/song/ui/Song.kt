@@ -9,18 +9,10 @@ data class Song(
     val content: String
 ) {
     companion object {
-        fun getChords(content: String) =
-            """\[crd]([^\[]+)\[/crd]"""
-                .toRegex()
-                .findAll(content)
-                .map { it.groupValues[1] }
-                .distinct()
-                .toList()
-
         fun from(songFull: SongFull) = Song(
             songFull.name,
             songFull.artistName,
-            getChords(songFull.content),
+            songFull.getChords(),
             songFull.content
         )
     }

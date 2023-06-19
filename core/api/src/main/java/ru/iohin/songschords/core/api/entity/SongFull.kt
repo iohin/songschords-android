@@ -8,4 +8,12 @@ data class SongFull(
     val author: String,
     val content: String,
     val copyright: String,
-)
+) {
+    fun getChords() =
+        """\[crd]([^\[]+)\[/crd]"""
+            .toRegex()
+            .findAll(content)
+            .map { it.groupValues[1] }
+            .distinct()
+            .toList()
+}
