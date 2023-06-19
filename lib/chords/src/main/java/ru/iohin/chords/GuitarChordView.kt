@@ -1,5 +1,6 @@
 package ru.iohin.chords
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -89,12 +90,16 @@ class GuitarChordView : View {
         context.resources.displayMetrics
     )
 
+    private var textSize = minTextSize
+
     private val textPaint = TextPaint().apply {
         color = this.color
         textSize = minTextSize
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
     }
+
+    private var animationScale = 1f
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -110,6 +115,17 @@ class GuitarChordView : View {
         defStyle
     ) {
         init(attrs, defStyle)
+    }
+
+    fun setNameAnimated(name: String) {
+        this.name = name
+        ValueAnimator.ofFloat(0f, 1f).run {
+            addUpdateListener {
+                animationScale = it.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
     }
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
@@ -184,6 +200,7 @@ class GuitarChordView : View {
 
             val textSize = minTextSize * scale
             if (textSize > minTextSize) {
+                this.textSize = textSize
                 textPaint.textSize = textSize
             }
 
@@ -201,6 +218,7 @@ class GuitarChordView : View {
 
         val chordScheme = this.chordScheme ?: return
 
+        textPaint.textSize = textSize * animationScale
         chordScheme.mutedStrings.forEach { stringIndex ->
             canvas.drawText(
                 "x",
@@ -218,7 +236,7 @@ class GuitarChordView : View {
                 x,
                 paddingTop,
                 x,
-                paddingTop + maxFret * fretIndent,
+                (paddingTop + maxFret * fretIndent) * animationScale,
                 linePaint
             )
 
@@ -233,7 +251,7 @@ class GuitarChordView : View {
                 canvas.drawLine(
                     paddingLeft,
                     y,
-                    paddingLeft + (chordScheme.strings.size - 1) * stringIndent,
+                    (paddingLeft + (chordScheme.strings.size - 1) * stringIndent) * animationScale,
                     y,
                     linePaint
                 )
@@ -246,7 +264,7 @@ class GuitarChordView : View {
                     canvas.drawCircle(
                         paddingLeft + (chordScheme.strings.size - stringIndex - 1) * stringIndent,
                         paddingTop + (fretIndex * fretIndent) - fretIndent / 2,
-                        dotRadius,
+                        dotRadius * animationScale,
                         dotPaint
                     )
                 }

@@ -24,9 +24,11 @@ class ChordsListView @JvmOverloads constructor(
 
     private val flow = Flow(context)
 
-    var chords = emptyArray<String>()
+    private var _chords = emptyArray<String>()
+    var chords: Array<String>
+        get() = _chords
         set(value) {
-            field = value
+            _chords = value
             populateChords()
         }
 
@@ -56,6 +58,11 @@ class ChordsListView @JvmOverloads constructor(
         addView(flow)
     }
 
+    fun setChordsAnimated(chords: Array<String>) {
+        _chords = chords
+        populateChords(true)
+    }
+
     private fun clearChords() {
         (childCount - 1 downTo 0).forEach { childIndex ->
             if (getChildAt(childIndex) is GuitarChordView) {
@@ -64,13 +71,17 @@ class ChordsListView @JvmOverloads constructor(
         }
     }
 
-    private fun populateChords() {
+    private fun populateChords(animated: Boolean = false) {
         clearChords()
         val ids = mutableListOf<Int>()
         chords.forEachIndexed { index, chord ->
             val chordView = GuitarChordView(context).apply {
                 id = index + 1
-                name = chord
+                if (animated) {
+                    setNameAnimated(chord)
+                } else {
+                    name = chord
+                }
                 color = this@ChordsListView.color
             }
             addView(chordView)
