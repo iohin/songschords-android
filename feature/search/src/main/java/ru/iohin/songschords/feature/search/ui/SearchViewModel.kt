@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.test.espresso.idling.CountingIdlingResource
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.iohin.songschords.core.api.data.SongRepository
@@ -20,6 +21,9 @@ class SearchViewModel(
     private var currentQuery = ""
     private var offset = 0
     private var canLoadMore = true
+
+    private var suggestionJob: Job? = null
+    private var searchJob: Job? = null
 
     init {
         search("")
@@ -40,7 +44,8 @@ class SearchViewModel(
             )
             return
         }
-        viewModelScope.launch {
+        suggestionJob?.cancel()
+        suggestionJob = viewModelScope.launch {
             when (val result = songRepository.getArtists(query)) {
                 is Result.Success -> _state.value = SearchState.SearchResultsState(
                     SearchData(
@@ -72,7 +77,8 @@ class SearchViewModel(
     }
 
     private fun search(query: String, offset: Int) {
-        viewModelScope.launch {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
             idlingResource.increment()
             when (val result = songRepository.getArtists(query, offset)) {
                 is Result.Success -> {
