@@ -45,7 +45,8 @@ msus2
 m7sus4
 m7sus2
  */
-open class Chord(val chordName: String) {
+open class Chord(name: String) {
+    val chordName: String
     val baseNote: String
         get() = notes.getOrNull(0) ?: ""
     val notes: Array<String>
@@ -57,11 +58,9 @@ open class Chord(val chordName: String) {
     val isMaj: Boolean
 
     init {
+        chordName = name.replace("H", "B")
         // detect base note
         var baseNote = chordName[0].uppercase()
-        if (baseNote.uppercase() == "H") {
-            baseNote = "B"
-        }
 
         // detect alteration
         var chordParts = chordName.substring(1)

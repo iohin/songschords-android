@@ -25,6 +25,7 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
         val mostMaxFret = 6
         val strings = List(tuning.length) { MutableList(mostMaxFret + 1) { 0 } }
         val soundedStrings = MutableList(tuning.length) { 0 }
+        var maxSoundString = tuning.length - 1
         val fretRange = 4
         var minFret = 0
         var maxFret = fretRange
@@ -51,7 +52,7 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
 
         val nextNote = {
             // suspend note should be set once in higher position
-            if (isSuspend && nextNoteIndex == 1 && maxStringIndex > 2) {
+            if (isSuspend && nextNoteIndex == 1 && maxStringIndex > maxSoundString - 3) {
                 nextNoteIndex++
             }
             // in maj chord with base on 6 string skip 3th step in lower position
@@ -103,6 +104,7 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
                             }
 
                             if (!baseWasSet) {
+                                maxSoundString = stringIndex
                                 baseWasSet = true
                                 // for non simple chords shift frets range from base note fret
                                 if (!isSimpleChord() || haveAddNotes() || isSuspend) {
