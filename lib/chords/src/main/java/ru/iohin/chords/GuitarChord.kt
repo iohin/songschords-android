@@ -5,7 +5,19 @@ import kotlinx.parcelize.Parcelize
 import java.lang.Integer.min
 
 class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
-    private fun isSimpleChord() = arrayOf("C", "G").contains(chordName)
+    private fun isSimpleChord(): Boolean {
+        // simple chords in zero position
+        val simpleChords = arrayOf("C", "D", "E", "G", "A", "Dm", "Em", "Am")
+        return if (alternativeBaseNote != null) {
+            // if chord has alternative base note check base chord name without alternative base
+            val baseChord = chordName
+                .replace(alternativeBaseNote, "")
+                .replace("/", "")
+            simpleChords.contains(baseChord)
+        } else {
+            simpleChords.contains(chordName)
+        }
+    }
 
     private fun haveAddNotes() = additionalNotes.isNotEmpty()
 
@@ -24,6 +36,7 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
                 2
             ) == notes[1]
         ) {
+            // sus2 chords cannot build with base on 6 string, therefore start from 5 string
             strings.size - 2
         } else {
             strings.size - 1
@@ -32,11 +45,17 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
         var nextNoteIndex = 0
         var nextAddNoteIndex = 0
         var note = notes.getOrNull(0) ?: ""
+        // attempt count to search note on one string
         val attemptCount = notes.size + additionalNotes.size
         var attempt = 1
 
         val nextNote = {
+            // suspend note should be set once in higher position
             if (isSuspend && nextNoteIndex == 1 && maxStringIndex > 2) {
+                nextNoteIndex++
+            }
+            // in maj chord with base on 6 string skip 3th step in lower position
+            if (isMaj && nextNoteIndex == 2 && maxStringIndex > 3) {
                 nextNoteIndex++
             }
             if (nextNoteIndex <= notes.size - 1) {
@@ -46,9 +65,15 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
                 note = additionalNotes[nextAddNoteIndex]
                 nextAddNoteIndex++
             } else {
-                note = notes[0]
+                // in maj chord higher note should not be base note
+                note = if (isMaj && notes.size > 1) {
+                    nextNoteIndex = 2
+                    notes[1]
+                } else {
+                    nextNoteIndex = 1
+                    notes[0]
+                }
                 nextAddNoteIndex = 0
-                nextNoteIndex = 1
             }
         }
 
@@ -79,9 +104,11 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
 
                             if (!baseWasSet) {
                                 baseWasSet = true
+                                // for non simple chords shift frets range from base note fret
                                 if (!isSimpleChord() || haveAddNotes() || isSuspend) {
                                     minFret = fretIndex
                                     maxFret = minFret + if (minFret > 0) {
+                                        // if min fret higher 0 then reduce range for simplify
                                         fretRange - 1
                                     } else {
                                         fretRange
@@ -102,12 +129,12 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
                     if (!baseWasSet) {
                         maxStringIndex--
                     } else if (soundedStrings[stringIndex] == 0) {
-                        nextNote()
                         if (attempt >= attemptCount) {
                             attempt = 1
                             maxStringIndex--
                         }
                         attempt++
+                        nextNote()
                         return@notes
                     }
                 }

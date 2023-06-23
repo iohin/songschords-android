@@ -54,6 +54,7 @@ open class Chord(val chordName: String) {
     val alternativeBaseNote: String?
     val additionalNotes: Array<String>
     val isSuspend: Boolean
+    val isMaj: Boolean
 
     init {
         // detect base note
@@ -151,6 +152,9 @@ open class Chord(val chordName: String) {
                 additionalNotes.add(Notes.chordStep(baseNote, Mode.MAJOR, majStep))
             }
             chordParts = chordParts.substring(offset)
+            isMaj = true
+        } else {
+            isMaj = false
         }
 
         // detect additional step

@@ -835,4 +835,36 @@ class GuitarChordTest {
             GuitarChord("Bm7", "EADGBE").getScheme(0).toString()
         )
     }
+
+    @Test
+    fun `should right Am base C chord`() {
+        assertEquals(
+            """
+                |||||X
+                ||||X|
+                ||XX||
+                |X||||
+                ||||||
+                ||||||
+                ||||||
+            """.trimIndent(),
+            GuitarChord("Am/C", "EADGBE").getScheme(0).toString()
+        )
+    }
+
+    @Test
+    fun `should right Fmaj chord`() {
+        assertEquals(
+            """
+                ||||||
+                X|||X|
+                ||XX||
+                ||||||
+                ||||||
+                ||||||
+                ||||||
+            """.trimIndent(),
+            GuitarChord("Fmaj", "EADGBE").getScheme(0).toString()
+        )
+    }
 }
