@@ -2,59 +2,105 @@ package ru.iohin.chords
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.lang.Integer.min
 
 class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
+    private fun isSimpleChord() = arrayOf("C", "G").contains(chordName)
+
+    private fun haveAddNotes() = additionalNotes.isNotEmpty()
+
     fun getScheme(position: Int): Scheme {
-        val strings = List(tuning.length) { MutableList(7) { 0 } }
-        val mutedStrings = mutableListOf<Int>()
-        var baseWasSet = false
+        val mostMaxFret = 6
+        val strings = List(tuning.length) { MutableList(mostMaxFret + 1) { 0 } }
+        val soundedStrings = MutableList(tuning.length) { 0 }
         val fretRange = 4
         var minFret = 0
         var maxFret = fretRange
-        val maxFretBase = fretRange
         var maxUsedFret = 0
-        var addNoteWasSet = false
-        (strings.size - 1 downTo 0).forEach { stringIndex ->
-            val frets = strings[stringIndex]
-            var note = tuning[tuning.length - 1 - stringIndex].toString()
-            var noteIsSet = false
-            var fretIndexWasSet = -1
-            frets.forEachIndexed { fretIndex, _ ->
-                if (
-                    (!noteIsSet || notes.size > 3 && notes[3] == note && !addNoteWasSet && stringIndex < 3)
-                    && fretIndex >= minFret
-                    && fretIndex <= maxFret
-                    && notes.contains(note)
-                    && (baseWasSet || notes[0] == note && fretIndex <= maxFretBase)
-                ) {
-                    if (notes.size > 3 && notes[3] == note) {
-                        addNoteWasSet = true
-                    }
-                    strings[stringIndex][fretIndex] = 1
-                    if (!baseWasSet && (fretIndex < 3 || mode == Mode.MINOR || notes.size > 3 && fretIndex >= maxFret)) {
-                        minFret = fretIndex
-                        maxFret = minFret + fretRange
-                    }
-                    baseWasSet = true
-                    noteIsSet = true
-                    if (fretIndexWasSet > -1) {
-                        strings[stringIndex][fretIndexWasSet] = 0
-                    }
-                    if (fretIndex > maxUsedFret) {
-                        maxUsedFret = fretIndex
-                    }
-                    fretIndexWasSet = fretIndex
-                }
-                note = Notes.after(note)
-            }
-            if (!noteIsSet) {
-                mutedStrings.add(stringIndex)
+        var maxStringIndex = strings.size - 1
+        var baseWasSet = false
+        var nextNoteIndex = 0
+        var nextAddNoteIndex = 0
+        var note = notes.getOrNull(0) ?: ""
+        val attemptCount = notes.size + additionalNotes.size
+        var attempt = 1
+
+        val nextNote = {
+            if (nextNoteIndex <= notes.size - 1) {
+                note = notes[nextNoteIndex]
+                nextNoteIndex++
+            } else if (nextAddNoteIndex <= additionalNotes.size - 1) {
+                note = additionalNotes[nextAddNoteIndex]
+                nextAddNoteIndex++
+            } else {
+                note = notes[0]
+                nextAddNoteIndex = 0
+                nextNoteIndex = 1
             }
         }
+
+        nextNote()
+
+        while (notes.isNotEmpty() && maxStringIndex >= 0) {
+            run notes@{
+                val searchNote = if (baseWasSet) {
+                    note
+                } else {
+                    alternativeBaseNote ?: note
+                }
+
+                (maxStringIndex downTo 0).forEach { stringIndex ->
+                    maxStringIndex = stringIndex
+
+                    var checkNote = tuning[tuning.length - 1 - stringIndex].toString()
+                    checkNote = Notes.after(checkNote, minFret)
+
+                    (minFret..min(maxFret, mostMaxFret)).forEach { fretIndex ->
+                        if (searchNote == checkNote && fretIndex in (minFret..maxFret)) {
+                            strings[stringIndex][fretIndex] = 1
+                            soundedStrings[stringIndex] = 1
+
+                            if (fretIndex > maxUsedFret) {
+                                maxUsedFret = fretIndex
+                            }
+
+                            if (!baseWasSet) {
+                                baseWasSet = true
+                                if (!isSimpleChord() || haveAddNotes() || isSuspend) {
+                                    minFret = fretIndex
+                                    maxFret = minFret + fretRange
+                                }
+                            }
+
+                            maxStringIndex = stringIndex - 1
+
+                            nextNote()
+
+                            attempt = 1
+
+                            return@notes
+                        }
+                        checkNote = Notes.after(checkNote)
+                    }
+                    if (!baseWasSet) {
+                        maxStringIndex--
+                    } else if (soundedStrings[stringIndex] == 0) {
+                        nextNote()
+                        if (attempt >= attemptCount) {
+                            attempt = 1
+                            maxStringIndex--
+                        }
+                        attempt++
+                        return@notes
+                    }
+                }
+            }
+        }
+
         return Scheme(
             position,
             strings.map { it.toIntArray() }.toTypedArray(),
-            mutedStrings.toIntArray(),
+            soundedStrings.toIntArray(),
             minFret,
             maxUsedFret,
             null
@@ -68,7 +114,7 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
          * array of strings of arrays of frets
          */
         val strings: Array<IntArray>,
-        val mutedStrings: IntArray,
+        val soundedStrings: IntArray,
         val minFret: Int,
         val maxFret: Int,
         val barre: Barre?

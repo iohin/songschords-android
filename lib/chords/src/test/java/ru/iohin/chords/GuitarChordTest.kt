@@ -36,12 +36,12 @@ class GuitarChordTest {
 
         val DbOrCsharp = """
             ||||||
-            |||X|X
-            ||||X|
-            ||X|||
-            |X||||
             ||||||
             ||||||
+            ||||||
+            |X|||X
+            ||||||
+            ||XXX|
         """.trimIndent()
 
         assertEquals(
@@ -155,12 +155,12 @@ class GuitarChordTest {
 
         val GsharpOrAb = """
             ||||||
-            ||XXX|
-            ||||||
-            |X||||
-            X||||X
             ||||||
             ||||||
+            ||||||
+            X|||XX
+            |||X||
+            |XX|||
         """.trimIndent()
 
         assertEquals(
@@ -439,12 +439,12 @@ class GuitarChordTest {
 
         assertEquals(
             """
-                |||||X
-                ||||X|
-                ||X|||
-                |X|X||
                 ||||||
                 ||||||
+                ||||||
+                |X|X|X
+                ||||||
+                ||X|X|
                 ||||||
             """.trimIndent(),
             GuitarChord("C7", "EADGBE").getScheme(0).toString()
@@ -558,12 +558,12 @@ class GuitarChordTest {
 
         assertEquals(
             """
-                ||XXX|
-                |||||X
+                ||||||
+                ||||||
+                ||||||
+                X|X|XX
+                |||X||
                 |X||||
-                X|||||
-                ||||||
-                ||||||
                 ||||||
             """.trimIndent(),
             GuitarChord("G7", "EADGBE").getScheme(0).toString()

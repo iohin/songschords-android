@@ -43,7 +43,7 @@ object Notes {
         return notes[index]
     }
 
-    fun after(note: String): String {
+    fun after(note: String, step: Int = 1): String {
         if (note.length > 2) {
             return note
         }
@@ -51,10 +51,11 @@ object Notes {
         if (index < 0) {
             return note
         }
-        if (index == notes.size - 1) {
-            index = 0
+        val nextIndex = index + step
+        if (nextIndex >= notes.size) {
+            index = nextIndex - notes.size
         } else {
-            index++
+            index += step
         }
         return notes[index]
     }

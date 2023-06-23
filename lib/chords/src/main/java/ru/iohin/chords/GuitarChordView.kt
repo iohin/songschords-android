@@ -219,14 +219,6 @@ class GuitarChordView : View {
         val chordScheme = this.chordScheme ?: return
 
         textPaint.textSize = textSize * animationScale
-        chordScheme.mutedStrings.forEach { stringIndex ->
-            canvas.drawText(
-                "x",
-                paddingLeft + (chordScheme.strings.size - stringIndex - 1) * stringIndent,
-                paddingTop - fretIndent / 3,
-                textPaint
-            )
-        }
 
         val maxFret = max(chordScheme.maxFret, 3)
 
@@ -239,6 +231,15 @@ class GuitarChordView : View {
                 (paddingTop + maxFret * fretIndent) * animationScale,
                 linePaint
             )
+
+            if (chordScheme.soundedStrings[stringIndex] == 0) {
+                canvas.drawText(
+                    "x",
+                    paddingLeft + (chordScheme.strings.size - stringIndex - 1) * stringIndent,
+                    paddingTop - fretIndent / 3,
+                    textPaint
+                )
+            }
 
             (0 .. maxFret).forEach { fretIndex ->
                 val clamped = frets[fretIndex]
