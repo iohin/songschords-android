@@ -17,7 +17,17 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
         var minFret = 0
         var maxFret = fretRange
         var maxUsedFret = 0
-        var maxStringIndex = strings.size - 1
+        var maxStringIndex = if (
+            isSuspend && notes.size >= 3 && Notes.chordStep(
+                baseNote,
+                Mode.MINOR,
+                2
+            ) == notes[1]
+        ) {
+            strings.size - 2
+        } else {
+            strings.size - 1
+        }
         var baseWasSet = false
         var nextNoteIndex = 0
         var nextAddNoteIndex = 0
@@ -26,6 +36,9 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
         var attempt = 1
 
         val nextNote = {
+            if (isSuspend && nextNoteIndex == 1 && maxStringIndex > 2) {
+                nextNoteIndex++
+            }
             if (nextNoteIndex <= notes.size - 1) {
                 note = notes[nextNoteIndex]
                 nextNoteIndex++
@@ -68,7 +81,11 @@ class GuitarChord(chordName: String, val tuning: String): Chord(chordName) {
                                 baseWasSet = true
                                 if (!isSimpleChord() || haveAddNotes() || isSuspend) {
                                     minFret = fretIndex
-                                    maxFret = minFret + fretRange
+                                    maxFret = minFret + if (minFret > 0) {
+                                        fretRange - 1
+                                    } else {
+                                        fretRange
+                                    }
                                 }
                             }
 
