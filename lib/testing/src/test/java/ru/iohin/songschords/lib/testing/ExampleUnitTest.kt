@@ -1,4 +1,4 @@
-package ru.iohin.songschords.testlib
+package ru.iohin.songschords.lib.testing
 
 import org.junit.Test
 

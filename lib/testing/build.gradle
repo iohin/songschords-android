@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'ru.iohin.songschords.testlib'
+    namespace 'ru.iohin.songschords.lib.testing'
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {

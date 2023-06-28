@@ -24,7 +24,7 @@ import ru.iohin.songschords.feature.song.ui.Song
 import ru.iohin.songschords.feature.song.ui.SongFragment
 import ru.iohin.songschords.feature.song.ui.SongState
 import ru.iohin.songschords.feature.song.ui.SongViewModel
-import ru.iohin.songschords.testlib.MainDispatcherRule
+import ru.iohin.songschords.lib.testing.MainDispatcherRule
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = TestApp::class)

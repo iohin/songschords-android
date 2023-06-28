@@ -14,7 +14,7 @@ import ru.iohin.songschords.feature.search.ui.Artist
 import ru.iohin.songschords.feature.search.ui.SearchData
 import ru.iohin.songschords.feature.search.ui.SearchState
 import ru.iohin.songschords.feature.search.ui.SearchViewModel
-import ru.iohin.songschords.testlib.MainDispatcherRule
+import ru.iohin.songschords.lib.testing.MainDispatcherRule
 
 class SearchViewModelTest {
     private val songRepository: SongRepository = mock()

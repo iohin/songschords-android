@@ -21,7 +21,7 @@ import ru.iohin.songschords.feature.search.ui.SearchData
 import ru.iohin.songschords.feature.search.ui.SearchFragment
 import ru.iohin.songschords.feature.search.ui.SearchState
 import ru.iohin.songschords.feature.search.ui.SearchViewModel
-import ru.iohin.songschords.testlib.MainDispatcherRule
+import ru.iohin.songschords.lib.testing.MainDispatcherRule
 
 
 @RunWith(AndroidJUnit4::class)

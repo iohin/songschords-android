@@ -15,7 +15,7 @@ import ru.iohin.songschords.feature.song.ui.ContentConvertor
 import ru.iohin.songschords.feature.song.ui.Song
 import ru.iohin.songschords.feature.song.ui.SongState
 import ru.iohin.songschords.feature.song.ui.SongViewModel
-import ru.iohin.songschords.testlib.MainDispatcherRule
+import ru.iohin.songschords.lib.testing.MainDispatcherRule
 
 class SongViewModelTest {
     private val songRepository: SongRepository = mock()
