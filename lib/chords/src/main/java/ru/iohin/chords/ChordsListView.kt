@@ -33,15 +33,17 @@ class ChordsListView @JvmOverloads constructor(
         }
 
     init {
-        val a = context.obtainStyledAttributes(
-            attrs, R.styleable.ChordsListView, defStyleAttr, 0
-        )
-        _color = a.getColor(
-            R.styleable.ChordsListView_cordColor,
-            color
-        )
+        try {
+            val a = context.obtainStyledAttributes(
+                attrs, R.styleable.ChordsListView, defStyleAttr, 0
+            )
+            _color = a.getColor(
+                R.styleable.ChordsListView_cordColor,
+                color
+            )
 
-        a.recycle()
+            a.recycle()
+        } catch (ignored: Throwable) {}
 
         flow.setWrapMode(Flow.WRAP_CHAIN)
         flow.setHorizontalStyle(Flow.CHAIN_PACKED)
