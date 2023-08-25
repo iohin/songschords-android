@@ -15,3 +15,6 @@ build
 
 .idea
 local.properties
+*.aab
+songschords.jks
+private_key.pepk
