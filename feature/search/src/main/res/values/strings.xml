@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="searchbar_hint">Введите название артиста</string>
+    <string name="searchbar_hint">Enter artist name</string>
 </resources>

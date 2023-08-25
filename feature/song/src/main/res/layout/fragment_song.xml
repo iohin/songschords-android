@@ -75,6 +75,15 @@
                     tools:text="Song content" />
             </HorizontalScrollView>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/copyright"
+                android:padding="16dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
